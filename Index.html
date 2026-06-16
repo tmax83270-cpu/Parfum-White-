@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PanameDelivery - MiniApp</title>
+
+  <!-- Telegram Web App -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <!-- CSS principal -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- TOP BANNER -->
+<div id="top-banner">
+  <div class="ticker">
+    🚘 Livraison rapide     |     📦 Produits de qualité     |     🔥 Offres limitées      |    
+   💶  Paiement en cash uniquement    |   🎁 Offre de parrainage : 3 amis validés = 1g de c ou 10g de jaune offert  | ✨ Offre promo sur place uniquement : 10g jaune 40€ , 4g cali Weed 40€ , 1g de c 50€   
+    
+  </div>
+</div>
+
+  <!-- ======================= -->
+  <!-- SPLASH SCREEN 2s -->
+  <!-- ======================= -->
+  <div id="splash">
+    <img src="assets/logo.png" alt="Logo PanameDelivery" class="splash-logo">
+  </div>
+
+  <!-- ======================= -->
+  <!-- APP PRINCIPALE -->
+  <!-- ======================= -->
+  <div id="app" style="display:none">
+
+    <!-- ======================= -->
+    <!-- HEADER / NAVIGATION -->
+    <!-- ======================= -->
+    <header class="topbar">
+      <div class="logo-container">
+        <img src="assets/logo.png" alt="THEGD33 Logo" class="logo">
+      </div>
+      <nav class="nav">
+        <button class="nav-item" data-page="page-qg">🏠 Accueil</button>
+        <button class="nav-item active" data-page="page-accueil">ℹ️ Infos</button>
+        <button class="nav-item" data-page="page-produits">🛍️ Produits</button>
+        <button class="nav-item" data-page="page-contact">✉️ Contact</button>
+      </nav>
+    </header>
+
+    <!-- ======================= -->
+    <!-- CONTENU PRINCIPAL -->
+    <!-- ======================= -->
+    <main class="content">
+
+      <!-- ======================= -->
+      <!-- PAGE ACCUEIL -->
+      <!-- ======================= -->
+      <section class="page" id="page-accueil">
+
+        <h2 class="section-title">Nos informations</h2>
+
+        <!-- MEET UP -->
+        <div class="info-box">
+          <div class="info-title">
+            🤝 MEET-UP
+            <span class="info-tag">93 / IDF</span>
+          </div>
+          <p class="info-sub">
+            Rencontre rapide et sécurisée sur nos points de retrait exclusifs
+            dans le 93 (Ligne H, RER C).
+          </p>
+          <div class="info-row"><span>MINIMUM</span><strong>50€</strong></div>
+          <div class="info-row"><span>HORAIRES</span><strong>13:00 – 03:00</strong></div>
+          <div class="info-row"><span>SÉCURITÉ</span><strong>Lieux discrets</strong></div>
+        </div>
+
+        <!-- LIVRAISON -->
+        <div class="info-box">
+          <div class="info-title">
+            🚚 LIVRAISON
+            <span class="info-tag premium">PREMIUM</span>
+          </div>
+          <p class="info-sub">
+            Service de livraison premium en Île-de-France par nos chauffeurs privés.
+          </p>
+          <div class="info-row"><span>PARIS & IDF PROCHE</span><strong>Min 50€</strong></div>
+          <div class="info-row"><span>77 / 91</span><strong>Min 100€</strong></div>
+          <div class="info-row"><span>COMMANDE</span><strong>24/24</strong></div>
+          <div class="info-row"><span>LIVRAISON</span><strong>14:00 – 02:00</strong></div>
+        </div>
+
+      </section>
+
+      <!-- ======================= -->
+      <!-- PAGE PRODUITS -->
+      <!-- ======================= -->
+      <section class="page" id="page-produits" style="display:none">
+        <h2>Nos produits</h2>
+        <div class="product-list"></div>
+      </section>
+
+      <!-- ======================= -->
+      <!-- PAGE PRODUIT DÉTAILLÉ -->
+      <!-- ======================= -->
+      <section class="page" id="page-produit-detail" style="display:none">
+
+        <!-- BOUTON RETOUR -->
+        <div class="product-section">
+          <button id="back-to-produits" class="back-btn">⬅ Retour</button>
+        </div>
+
+        <!-- MEDIA -->
+        <div id="product-media">
+          <video id="product-video" width="100%" controls>
+            <source id="product-video-src" src="" type="video/mp4">
+          </video>
+        </div>
+
+        <!-- NOM PRODUIT & SOUS-NOM -->
+        <div class="product-section" id="product-name">
+          <h2 id="product-title">CALI WEED</h2>
+          <div class="info-row">
+            <h3 id="product-subtitle">SuperBoof</h3>
+          </div>
+        </div>
+
+        <!-- DESCRIPTION -->
+        <div class="product-section" id="product-description-container">
+          <h3>📝 Description</h3>
+          <div class="info-row">
+            <p id="product-description">
+              Description détaillée du produit ici...
+            </p>
+          </div>
+        </div>
+
+        <!-- PRIX ET QUANTITÉS -->
+        <div class="product-section" id="product-prices-container">
+          <h3>💰 Prix et quantités</h3>
+          <div id="product-prices" class="price-grid">
+            <div class="info-row"><span>1g</span><strong>50€</strong></div>
+            <div class="info-row"><span>2g</span><strong>90€</strong></div>
+            <div class="info-row"><span>3g</span><strong>130€</strong></div>
+          </div>
+        </div>
+
+        <!-- CONTACT -->
+        <div class="product-section" id="product-order">
+          <a href="https://wa.me/33758594530" target="_blank" class="contact-btn whatsapp">📱WhatsApp</a>
+          <a href="https://t.me/PanameDelivery" target="_blank" class="contact-btn telegram">✈️Telegram</a>
+        </div>
+
+      </section>
+
+      <!-- ======================= -->
+      <!-- PAGE CONTACT -->
+      <!-- ======================= -->
+      <section class="page" id="page-contact" style="display:none">
+        <h2>Contact</h2>
+        <div class="contact-buttons">
+          <a href="https://wa.me/33758594530" target="_blank" class="contact-btn big whatsapp">📱 WhatsApp</a>
+          <a href="https://t.me/PanameDelivery" target="_blank" class="contact-btn big telegram">✈️ Telegram</a>
+        </div>
+      </section>
+
+      <!-- ======================= -->
+      <!-- PAGE QG -->
+      <!-- ======================= -->
+      <section class="page" id="page-qg" style="display:none">
+
+        <!-- Offre -->
+        <div class="qg-offer">
+          <span class="badge">OFFRE LIMITÉE 🎁</span>
+          <h2>PANAME <span>DELIVERY</span></h2>
+          <p>PARRAINAGE EXCLUSIF</p>
+          <strong>3 AMIS VALIDÉS = 1G DE C OU 10G JAUNE OFFERT</strong>
+        </div>
+
+        <!-- Cartes QG -->
+        <div class="qg-cards">
+          <div class="qg-card">
+            <div class="icon">☀️</div>
+            <div>
+              <h3>MENU DOUX</h3>
+              <p>CALI WEED • TOP JAUNE • FILTRÉ</p>
+            </div>
+            <span class="arrow">➜</span>
+          </div>
+          <div class="qg-card">
+            <div class="icon">❄️</div>
+            <div>
+              <h3>MENU DUR</h3>
+              <p>PRODUITS DE PURETÉ GARANTIE</p>
+            </div>
+            <span class="arrow">➜</span>
+          </div>
+        </div>
+
+        <!-- Avis clients -->
+        <h4 class="qg-title">CONFIANCE CLIENT</h4>
+        <div class="qg-reviews">
+          <div class="review"><strong>Client 0182</strong><span>★★★★★</span><p>"Du caviar la C, merci la team 🙏"</p></div>
+          <div class="review"><strong>Client 0154</strong><span>★★★★★</span><p>"Service rapide de nuit, lourd ⚡"</p></div>
+          <div class="review"><strong>Client 0223</strong><span>★★★★★</span><p>"Produit conforme et livraison super rapide 👌"</p></div>
+          <div class="review"><strong>Client 0198</strong><span>★★★★☆</span><p>"Très satisfait, un peu de retard mais qualité au top 🔥"</p></div>
+          <div class="review"><strong>Client 0145</strong><span>★★★★★</span><p>"Le meilleur service de livraison que j’ai testé, recommande !" </p></div>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ======================= -->
+  <!-- JS PRINCIPAL -->
+  <!-- ======================= -->
+  <script src="app.js?v=2" defer></script>
+</body>
+</html>
