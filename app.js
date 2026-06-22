@@ -14,12 +14,85 @@ function haptic() {
 }
 
 // =======================================================
-//                      SPLASH SCREEN 2s
+//                      PANIER - SYSTEM
+// =======================================================
+class Cart {
+  constructor() {
+    this.items = this.loadCart();
+  }
+
+  loadCart() {
+    const saved = localStorage.getItem('panier');
+    return saved ? JSON.parse(saved) : [];
+  }
+
+  saveCart() {
+    localStorage.setItem('panier', JSON.stringify(this.items));
+    this.updateBadge();
+  }
+
+  addItem(product, price, qty = 1) {
+    const existingItem = this.items.find(item => item.id === product && item.price === price);
+    
+    if (existingItem) {
+      existingItem.qty += qty;
+    } else {
+      this.items.push({
+        id: product,
+        name: productsData[product].title,
+        price: price,
+        qty: qty
+      });
+    }
+    
+    this.saveCart();
+    haptic();
+  }
+
+  removeItem(product, price) {
+    this.items = this.items.filter(item => !(item.id === product && item.price === price));
+    this.saveCart();
+    haptic();
+  }
+
+  updateQty(product, price, qty) {
+    const item = this.items.find(item => item.id === product && item.price === price);
+    if (item) {
+      item.qty = Math.max(1, qty);
+      this.saveCart();
+    }
+  }
+
+  clear() {
+    this.items = [];
+    this.saveCart();
+  }
+
+  getTotal() {
+    return this.items.reduce((sum, item) => sum + (item.price * item.qty), 0);
+  }
+
+  updateBadge() {
+    const badge = document.getElementById('cart-badge');
+    const count = this.items.length;
+    
+    if (count > 0) {
+      badge.textContent = count > 9 ? '9+' : count;
+      badge.style.display = 'flex';
+    } else {
+      badge.style.display = 'none';
+    }
+  }
+}
+
+const cart = new Cart();
+
+// =======================================================
+//                      SPLASH SCREEN
 // =======================================================
 const splash = document.getElementById('splash');
 const app = document.getElementById('app');
 
-// Afficher le splash screen pendant 2 secondes puis basculer sur l'app
 setTimeout(() => {
   splash.style.transition = 'opacity 0.4s ease';
   splash.style.opacity = '0';
@@ -28,8 +101,8 @@ setTimeout(() => {
     splash.style.display = 'none';
     app.style.display = 'block';
 
-    // --- Afficher QG au lieu de l'accueil ---
-    document.querySelectorAll('.page').forEach(p => p.style.display = 'none'); // cacher toutes les pages
+    // Afficher QG par défaut
+    document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
     const qgPage = document.getElementById('page-qg');
     qgPage.style.display = 'block';
 
@@ -38,73 +111,66 @@ setTimeout(() => {
     const qgBtn = document.querySelector('.nav-item[data-page="page-qg"]');
     if (qgBtn) qgBtn.classList.add('active');
 
-  }, 400); // attendre que le fade out se termine
+    cart.updateBadge();
 
-}, 2000); // splash visible 2 secondes
+  }, 400);
+
+}, 2000);
 
 // =======================================================
-//                      NAVIGATION ONGLETS
+//                      NAVIGATION
 // =======================================================
 document.querySelectorAll('.nav-item').forEach(btn => {
   btn.addEventListener('click', () => {
     haptic();
 
-    // Active le bouton cliqué
+    // Remove active from all
     document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
 
-    // Affiche la page correspondante
-    const pageId = btn.dataset.page;
+    // Hide all pages
     document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-    document.getElementById(pageId).style.display = 'block';
 
-    // Si Produits, afficher tous les produits
+    // Show selected page
+    const pageId = btn.dataset.page;
+    const page = document.getElementById(pageId);
+    page.style.display = 'block';
+
+    // Load products if needed
     if (pageId === 'page-produits') {
       showProductList(document.querySelector('#page-produits .product-list'), Object.keys(productsData));
+    }
+
+    // Load cart if needed
+    if (pageId === 'page-panier') {
+      renderCart();
     }
   });
 });
 
 // =======================================================
-//              QG → REDIRECTION VERS PRODUITS
+//              QG CARDS → PRODUITS
 // =======================================================
-document.querySelectorAll('.qg-card').forEach(card => {
-  card.addEventListener('click', () => {
+document.addEventListener('click', e => {
+  if (e.target.closest('.qg-card')) {
     haptic();
 
-    // Désactiver tous les boutons du menu
+    // Switch to products
     document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+    const prodBtn = document.querySelector('.nav-item[data-page="page-produits"]');
+    if (prodBtn) prodBtn.classList.add('active');
 
-    // Activer le bouton Produits
-    const produitsBtn = document.querySelector('.nav-item[data-page="page-produits"]');
-    if (produitsBtn) produitsBtn.classList.add('active');
-
-    // Cacher toutes les pages
     document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+    const prodPage = document.getElementById('page-produits');
+    prodPage.style.display = 'block';
 
-    // Afficher la page Produits
-    const produitsPage = document.getElementById('page-produits');
-    produitsPage.style.display = 'block';
-
-    // Charger tous les produits
     showProductList(
       document.querySelector('#page-produits .product-list'),
       Object.keys(productsData)
     );
 
-    // Scroll en haut (optionnel mais pro)
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-});
-
-
-// =======================================================
-//                      CARTES ACCUEIL
-// =======================================================
-document.querySelectorAll('.card').forEach(card => {
-  card.addEventListener('click', () => {
-    card.classList.toggle('expanded');
-  });
+  }
 });
 
 // =======================================================
@@ -117,8 +183,8 @@ const productsData = {
     description: "Notes fraîches de bergamote associées à des accords boisés puissants.",
     video: "assets/sauvage.mp4",
     prices: [
-      { qty: "50ml", price: "69€" },
-      { qty: "100ml", price: "99€" }
+      { qty: "50ml", price: 69 },
+      { qty: "100ml", price: 99 }
     ]
   },
 
@@ -128,8 +194,8 @@ const productsData = {
     description: "Fragrance élégante et moderne aux notes boisées aromatiques.",
     video: "assets/bleu_chanel.mp4",
     prices: [
-      { qty: "50ml", price: "79€" },
-      { qty: "100ml", price: "115€" }
+      { qty: "50ml", price: 79 },
+      { qty: "100ml", price: 115 }
     ]
   },
 
@@ -139,8 +205,8 @@ const productsData = {
     description: "Parfum iconique aux notes fruitées et boisées.",
     video: "assets/aventus.mp4",
     prices: [
-      { qty: "50ml", price: "149€" },
-      { qty: "100ml", price: "249€" }
+      { qty: "50ml", price: 149 },
+      { qty: "100ml", price: 249 }
     ]
   },
 
@@ -150,8 +216,8 @@ const productsData = {
     description: "Une fragrance luxueuse et raffinée à la signature unique.",
     video: "assets/baccarat.mp4",
     prices: [
-      { qty: "35ml", price: "99€" },
-      { qty: "70ml", price: "179€" }
+      { qty: "35ml", price: 99 },
+      { qty: "70ml", price: 179 }
     ]
   },
 
@@ -161,21 +227,23 @@ const productsData = {
     description: "Un parfum intense aux notes gourmandes et orientales.",
     video: "assets/lemale.mp4",
     prices: [
-      { qty: "75ml", price: "89€" },
-      { qty: "125ml", price: "119€" }
+      { qty: "75ml", price: 89 },
+      { qty: "125ml", price: 119 }
     ]
   }
 };
+
 // =======================================================
 //                      AFFICHAGE PRODUITS
 // =======================================================
 function showProductList(container, keys) {
   container.innerHTML = '';
-  keys.forEach(k => {
+  keys.forEach((k, index) => {
     const prod = productsData[k];
     const div = document.createElement('div');
     div.className = 'product';
     div.dataset.product = k;
+    div.style.animationDelay = `${index * 0.1}s`;
     div.innerHTML = `
       <div class="product-top"><img src="assets/${k}.jpg" alt="${prod.title}"></div>
       <div class="product-bottom">
@@ -191,24 +259,20 @@ function showProductList(container, keys) {
 // =======================================================
 //                      OUVRIR PRODUIT DÉTAILLÉ
 // =======================================================
+let currentProduct = null;
+let currentPrice = null;
+
 function openProductDetail(key) {
   haptic();
 
   const data = productsData[key];
+  currentProduct = key;
+  currentPrice = data.prices[0].price;
 
-  // Cacher toutes les pages
-  document.querySelectorAll('.page').forEach(p => {
-    p.style.display = 'none';
-    p.classList.remove('page-animate');
-  });
-
-  // Afficher page détail produit
+  document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
   const pageDetail = document.getElementById('page-produit-detail');
   pageDetail.style.display = 'block';
-  void pageDetail.offsetWidth;
-  pageDetail.classList.add('page-animate');
 
-  // Remplir infos produit
   document.getElementById('product-title').textContent = data.title;
   document.getElementById('product-subtitle').textContent = data.subtitle || '';
   document.getElementById('product-description').textContent = data.description;
@@ -220,11 +284,12 @@ function openProductDetail(key) {
   data.prices.forEach((p, i) => {
     const div = document.createElement('div');
     div.className = 'price-option';
-    div.textContent = `${p.qty} : ${p.price}`;
+    div.innerHTML = `<span>${p.qty}</span><strong>${p.price}€</strong>`;
     if (i === 0) div.classList.add('selected');
     div.addEventListener('click', () => {
       document.querySelectorAll('.price-option').forEach(c => c.classList.remove('selected'));
       div.classList.add('selected');
+      currentPrice = p.price;
     });
     pricesContainer.appendChild(div);
   });
@@ -240,7 +305,7 @@ document.addEventListener('click', e => {
 });
 
 // =======================================================
-//                      BOUTON RETOUR PRODUIT
+//                      RETOUR PRODUITS
 // =======================================================
 document.getElementById('back-to-produits').addEventListener('click', () => {
   haptic();
@@ -249,59 +314,103 @@ document.getElementById('back-to-produits').addEventListener('click', () => {
 });
 
 // =======================================================
-//                      CONTACT (WhatsApp / Telegram)
+//                      AJOUTER AU PANIER
 // =======================================================
-document.querySelectorAll('.contact-btn').forEach(btn => {
-  btn.addEventListener('click', () => haptic());
+document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+  if (currentProduct && currentPrice) {
+    cart.addItem(currentProduct, currentPrice, 1);
+    
+    // Show feedback
+    const btn = document.getElementById('add-to-cart-btn');
+    const originalText = btn.textContent;
+    btn.textContent = '✅ AJOUTÉ!';
+    btn.style.background = '#25D366';
+    
+    setTimeout(() => {
+      btn.textContent = originalText;
+      btn.style.background = '';
+    }, 2000);
+  }
 });
 
 // =======================================================
-//                      NEIGE
+//                      RENDU PANIER
 // =======================================================
-function createSnowflake() {
-  const snowContainer = document.getElementById('snow-container');
-  if (!snowContainer) return;
+function renderCart() {
+  const empty = document.getElementById('cart-empty');
+  const content = document.getElementById('cart-content');
+  
+  if (cart.items.length === 0) {
+    empty.style.display = 'block';
+    content.style.display = 'none';
+    return;
+  }
 
-  const flake = document.createElement('div');
-  flake.className = 'snowflake';
-  flake.textContent = '❄';
-  flake.style.left = Math.random() * window.innerWidth + 'px';
-  flake.style.fontSize = (10 + Math.random() * 20) + 'px';
-  flake.style.opacity = 0.5 + Math.random() * 0.5;
+  empty.style.display = 'none';
+  content.style.display = 'block';
 
-  const duration = 10 + Math.random() * 20;
-  flake.style.animationDuration = duration + 's';
-  flake.style.animationDelay = Math.random() * 5 + 's';
+  const itemsContainer = document.getElementById('cart-items');
+  itemsContainer.innerHTML = '';
 
-  snowContainer.appendChild(flake);
+  cart.items.forEach((item, index) => {
+    const itemDiv = document.createElement('div');
+    itemDiv.className = 'cart-item';
+    itemDiv.style.animationDelay = `${index * 0.05}s`;
+    itemDiv.innerHTML = `
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-detail">${item.price}€</div>
+        <div class="cart-item-price">Total: ${(item.price * item.qty)}€</div>
+      </div>
+      <div class="cart-item-controls">
+        <button class="qty-btn qty-minus">−</button>
+        <div class="qty-display">${item.qty}</div>
+        <button class="qty-btn qty-plus">+</button>
+        <button class="remove-btn">✕</button>
+      </div>
+    `;
 
-  setTimeout(() => {
-    snowContainer.removeChild(flake);
-  }, duration * 1000);
-}
-setInterval(createSnowflake, 200);
+    itemDiv.querySelector('.qty-minus').addEventListener('click', () => {
+      if (item.qty > 1) {
+        cart.updateQty(item.id, item.price, item.qty - 1);
+        renderCart();
+      }
+    });
 
+    itemDiv.querySelector('.qty-plus').addEventListener('click', () => {
+      cart.updateQty(item.id, item.price, item.qty + 1);
+      renderCart();
+    });
 
-//ANIMATION //
+    itemDiv.querySelector('.remove-btn').addEventListener('click', () => {
+      cart.removeItem(item.id, item.price);
+      renderCart();
+    });
 
-function animateCards(sectionSelector) {
-  const cards = document.querySelectorAll(sectionSelector);
-  cards.forEach((card, i) => {
-    card.style.opacity = 0;
-    card.style.transform = 'translateY(15px)';
-    card.style.animation = 'none';
-    void card.offsetWidth; // reset animation
-    card.style.animation = `slideFadeIn 0.4s ease forwards`;
-    card.style.animationDelay = `${0.1 * (i+1)}s`;
+    itemsContainer.appendChild(itemDiv);
   });
+
+  // Mettre à jour le résumé
+  const total = cart.getTotal();
+  const delivery = total >= 50 ? 0 : 5;
+  
+  document.getElementById('cart-subtotal').textContent = total + '€';
+  document.getElementById('cart-delivery').textContent = delivery + '€';
+  document.getElementById('cart-total').textContent = (total + delivery) + '€';
 }
 
-// Lors du changement d'onglet
-document.querySelectorAll('.nav-item').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const pageId = btn.dataset.page;
-
-    if(pageId === 'page-accueil') animateCards('.cards .card');
-    if(pageId === 'page-qg') animateCards('.qg-cards .qg-card');
-  });
+// =======================================================
+//                      BOUTON VIDER PANIER
+// =======================================================
+document.getElementById('clear-cart-btn').addEventListener('click', () => {
+  if (confirm('Vider le panier ?')) {
+    haptic();
+    cart.clear();
+    renderCart();
+  }
 });
+
+// =======================================================
+//                      INIT
+// =======================================================
+cart.updateBadge();
