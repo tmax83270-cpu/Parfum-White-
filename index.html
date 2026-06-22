@@ -43,6 +43,8 @@
 
       <!-- PAGE ACCUEIL / QG -->
       <section class="page" id="page-qg">
+        <h2 class="section-title">Accueil</h2>
+        
         <div class="qg-offer">
           <span class="badge">OFFRE LIMITÉE 🎁</span>
           <h2>PANAME <span>DELIVERY</span></h2>
@@ -81,7 +83,7 @@
 
       <!-- PAGE INFOS -->
       <section class="page" id="page-accueil">
-        <h2 class="section-title">Nos informations</h2>
+        <h2 class="section-title">Informations</h2>
 
         <div class="info-box">
           <div class="info-title">
@@ -113,45 +115,45 @@
 
       <!-- PAGE PRODUITS -->
       <section class="page" id="page-produits">
-        <h2 class="section-title">Nos produits</h2>
+        <h2 class="section-title">Produits</h2>
         <div class="product-list"></div>
       </section>
 
       <!-- PAGE PRODUIT DÉTAILLÉ -->
       <section class="page" id="page-produit-detail">
-        <div class="product-section">
+        <div class="product-detail-container">
           <button id="back-to-produits" class="back-btn">⬅ Retour</button>
-        </div>
 
-        <div id="product-media">
-          <video id="product-video" width="100%" controls>
-            <source id="product-video-src" src="" type="video/mp4">
-          </video>
-        </div>
+          <div id="product-media">
+            <video id="product-video" width="100%" controls>
+              <source id="product-video-src" src="" type="video/mp4">
+            </video>
+          </div>
 
-        <div class="product-section" id="product-name">
-          <h2 id="product-title">PRODUIT</h2>
-          <h3 id="product-subtitle">Sous-titre</h3>
-        </div>
+          <div class="product-section-center" id="product-name">
+            <h2 id="product-title">PRODUIT</h2>
+            <h3 id="product-subtitle">Sous-titre</h3>
+          </div>
 
-        <div class="product-section" id="product-description-container">
-          <h3>📝 Description</h3>
-          <p id="product-description">Description détaillée du produit ici...</p>
-        </div>
+          <div class="product-section-center" id="product-description-container">
+            <h3>📝 Description</h3>
+            <p id="product-description">Description détaillée du produit ici...</p>
+          </div>
 
-        <div class="product-section" id="product-prices-container">
-          <h3>💰 Prix et quantités</h3>
-          <div id="product-prices" class="price-grid"></div>
-        </div>
+          <div class="product-section-center" id="product-prices-container">
+            <h3>💰 Prix et quantités</h3>
+            <div id="product-prices" class="price-grid"></div>
+          </div>
 
-        <div class="product-section" id="product-order">
-          <button id="add-to-cart-btn" class="contact-btn btn-add-cart">🛒 AJOUTER AU PANIER</button>
+          <div class="product-section-center" id="product-order">
+            <button id="add-to-cart-btn" class="contact-btn btn-add-cart">🛒 AJOUTER AU PANIER</button>
+          </div>
         </div>
       </section>
 
       <!-- PAGE PANIER -->
       <section class="page" id="page-panier">
-        <h2 class="section-title">Votre Panier</h2>
+        <h2 class="section-title">Panier</h2>
         
         <div id="cart-empty" class="cart-empty" style="display: none;">
           <div class="empty-icon">🛒</div>
@@ -178,8 +180,8 @@
           </div>
 
           <div class="cart-actions">
-            <a href="https://wa.me/33758594530" target="_blank" class="contact-btn big whatsapp">📱 Commander via WhatsApp</a>
-            <a href="https://t.me/PanameDelivery" target="_blank" class="contact-btn big telegram">✈️ Commander via Telegram</a>
+            <a href="https://wa.me/33758594530" target="_blank" class="contact-btn contact-btn-small whatsapp">📱 WhatsApp</a>
+            <a href="https://t.me/PanameDelivery" target="_blank" class="contact-btn contact-btn-small telegram">✈️ Telegram</a>
           </div>
 
           <button id="clear-cart-btn" class="btn-clear-cart">Vider le panier</button>
@@ -190,8 +192,8 @@
       <section class="page" id="page-contact">
         <h2 class="section-title">Contact</h2>
         <div class="contact-buttons">
-          <a href="https://wa.me/33758594530" target="_blank" class="contact-btn big whatsapp">📱 WhatsApp</a>
-          <a href="https://t.me/PanameDelivery" target="_blank" class="contact-btn big telegram">✈️ Telegram</a>
+          <a href="https://wa.me/33758594530" target="_blank" class="contact-btn contact-btn-small whatsapp">📱 WhatsApp</a>
+          <a href="https://t.me/PanameDelivery" target="_blank" class="contact-btn contact-btn-small telegram">✈️ Telegram</a>
         </div>
       </section>
 
