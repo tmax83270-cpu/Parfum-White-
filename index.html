@@ -14,171 +14,42 @@
 <body>
 
   <!-- TOP BANNER -->
-<div id="top-banner">
-  <div class="ticker">
-    🚘 Livraison rapide     |     📦 Produits de qualité     |     🔥 Offres limitées      |    
-   💶  Paiement en cash uniquement    |   🎁 Offre de parrainage : 3 amis validés = 1 parfum offert  | ✨ Offre promo sur place uniquement : 1 parfum channel 60€   
-    
+  <div id="top-banner">
+    <div class="ticker">
+      🚘 Livraison rapide | 📦 Produits de qualité | 🔥 Offres limitées | 💶 Paiement en cash | 🎁 Parrainage exclusif
+    </div>
   </div>
-</div>
 
-  <!-- ======================= -->
-  <!-- SPLASH SCREEN 2s -->
-  <!-- ======================= -->
+  <!-- SPLASH SCREEN -->
   <div id="splash">
     <img src="assets/logo.png" alt="Logo PanameDelivery" class="splash-logo">
   </div>
 
-  <!-- ======================= -->
   <!-- APP PRINCIPALE -->
-  <!-- ======================= -->
   <div id="app" style="display:none">
 
-    <!-- ======================= -->
-    <!-- HEADER / NAVIGATION -->
-    <!-- ======================= -->
+    <!-- HEADER -->
     <header class="topbar">
       <div class="logo-container">
-        <img src="assets/logo.png" alt="THEGD33 Logo" class="logo">
+        <img src="assets/logo.png" alt="Logo" class="logo">
       </div>
-      <nav class="nav">
-        <button class="nav-item" data-page="page-qg">🏠 Accueil</button>
-        <button class="nav-item active" data-page="page-accueil">ℹ️ Infos</button>
-        <button class="nav-item" data-page="page-produits">🛍️ Produits</button>
-        <button class="nav-item" data-page="page-contact">✉️ Contact</button>
-      </nav>
+      <div class="header-right">
+        <span class="header-title">PANAME DELIVERY</span>
+      </div>
     </header>
 
-    <!-- ======================= -->
-    <!-- CONTENU PRINCIPAL -->
-    <!-- ======================= -->
+    <!-- CONTENU -->
     <main class="content">
 
-      <!-- ======================= -->
-      <!-- PAGE ACCUEIL -->
-      <!-- ======================= -->
-      <section class="page" id="page-accueil">
-
-        <h2 class="section-title">Nos informations</h2>
-
-        <!-- MEET UP -->
-        <div class="info-box">
-          <div class="info-title">
-            🤝 MEET-UP
-            <span class="info-tag">93 / IDF</span>
-          </div>
-          <p class="info-sub">
-            Rencontre rapide et sécurisée sur nos points de retrait exclusifs
-            dans le 93 (Ligne H, RER C).
-          </p>
-          <div class="info-row"><span>MINIMUM</span><strong>50€</strong></div>
-          <div class="info-row"><span>HORAIRES</span><strong>13:00 – 03:00</strong></div>
-          <div class="info-row"><span>SÉCURITÉ</span><strong>Lieux discrets</strong></div>
-        </div>
-
-        <!-- LIVRAISON -->
-        <div class="info-box">
-          <div class="info-title">
-            🚚 LIVRAISON
-            <span class="info-tag premium">PREMIUM</span>
-          </div>
-          <p class="info-sub">
-            Service de livraison premium en Île-de-France par nos chauffeurs privés.
-          </p>
-          <div class="info-row"><span>PARIS & IDF PROCHE</span><strong>Min 50€</strong></div>
-          <div class="info-row"><span>77 / 91</span><strong>Min 100€</strong></div>
-          <div class="info-row"><span>COMMANDE</span><strong>24/24</strong></div>
-          <div class="info-row"><span>LIVRAISON</span><strong>14:00 – 02:00</strong></div>
-        </div>
-
-      </section>
-
-      <!-- ======================= -->
-      <!-- PAGE PRODUITS -->
-      <!-- ======================= -->
-      <section class="page" id="page-produits" style="display:none">
-        <h2>Nos produits</h2>
-        <div class="product-list"></div>
-      </section>
-
-      <!-- ======================= -->
-      <!-- PAGE PRODUIT DÉTAILLÉ -->
-      <!-- ======================= -->
-      <section class="page" id="page-produit-detail" style="display:none">
-
-        <!-- BOUTON RETOUR -->
-        <div class="product-section">
-          <button id="back-to-produits" class="back-btn">⬅ Retour</button>
-        </div>
-
-        <!-- MEDIA -->
-        <div id="product-media">
-          <video id="product-video" width="100%" controls>
-            <source id="product-video-src" src="" type="video/mp4">
-          </video>
-        </div>
-
-        <!-- NOM PRODUIT & SOUS-NOM -->
-        <div class="product-section" id="product-name">
-          <h2 id="product-title">CALI WEED</h2>
-          <div class="info-row">
-            <h3 id="product-subtitle">SuperBoof</h3>
-          </div>
-        </div>
-
-        <!-- DESCRIPTION -->
-        <div class="product-section" id="product-description-container">
-          <h3>📝 Description</h3>
-          <div class="info-row">
-            <p id="product-description">
-              Description détaillée du produit ici...
-            </p>
-          </div>
-        </div>
-
-        <!-- PRIX ET QUANTITÉS -->
-        <div class="product-section" id="product-prices-container">
-          <h3>💰 Prix et quantités</h3>
-          <div id="product-prices" class="price-grid">
-            <div class="info-row"><span>1parfum</span><strong>50€</strong></div>
-            <div class="info-row"><span>2parfum</span><strong>90€</strong></div>
-            <div class="info-row"><span>3parfum</span><strong>130€</strong></div>
-          </div>
-        </div>
-
-        <!-- CONTACT -->
-        <div class="product-section" id="product-order">
-          <a href="https://wa.me/33758594530" target="_blank" class="contact-btn whatsapp">📱WhatsApp</a>
-          <a href="https://t.me/PanameDelivery" target="_blank" class="contact-btn telegram">✈️Telegram</a>
-        </div>
-
-      </section>
-
-      <!-- ======================= -->
-      <!-- PAGE CONTACT -->
-      <!-- ======================= -->
-      <section class="page" id="page-contact" style="display:none">
-        <h2>Contact</h2>
-        <div class="contact-buttons">
-          <a href="https://wa.me/33758594530" target="_blank" class="contact-btn big whatsapp">📱 WhatsApp</a>
-          <a href="https://t.me/PanameDelivery" target="_blank" class="contact-btn big telegram">✈️ Telegram</a>
-        </div>
-      </section>
-
-      <!-- ======================= -->
-      <!-- PAGE QG -->
-      <!-- ======================= -->
-      <section class="page" id="page-qg" style="display:none">
-
-        <!-- Offre -->
+      <!-- PAGE ACCUEIL / QG -->
+      <section class="page" id="page-qg">
         <div class="qg-offer">
           <span class="badge">OFFRE LIMITÉE 🎁</span>
           <h2>PANAME <span>DELIVERY</span></h2>
           <p>PARRAINAGE EXCLUSIF</p>
-          <strong>3 AMIS VALIDÉS = 1Parfum OFFERT</strong>
+          <strong>3 AMIS VALIDÉS = 1 PARFUM OFFERT</strong>
         </div>
 
-        <!-- Cartes QG -->
         <div class="qg-cards">
           <div class="qg-card">
             <div class="icon">☀️</div>
@@ -192,30 +63,167 @@
             <div class="icon">☀️</div>
             <div>
               <h3>MENU DUR</h3>
-              <p>PRODUITS DE QUALITE GARANTIE</p>
+              <p>PRODUITS DE QUALITÉ GARANTIE</p>
             </div>
             <span class="arrow">➜</span>
           </div>
         </div>
 
-        <!-- Avis clients -->
         <h4 class="qg-title">CONFIANCE CLIENT</h4>
         <div class="qg-reviews">
           <div class="review"><strong>Client 0182</strong><span>★★★★★</span><p>"Du caviar le parfum, merci la team 🙏"</p></div>
           <div class="review"><strong>Client 0154</strong><span>★★★★★</span><p>"Service rapide de nuit, lourd ⚡"</p></div>
           <div class="review"><strong>Client 0223</strong><span>★★★★★</span><p>"Produit conforme et livraison super rapide 👌"</p></div>
           <div class="review"><strong>Client 0198</strong><span>★★★★☆</span><p>"Très satisfait, un peu de retard mais qualité au top 🔥"</p></div>
-          <div class="review"><strong>Client 0145</strong><span>★★★★★</span><p>"Le meilleur service de livraison que j'ai testé, recommande !" </p></div>
+          <div class="review"><strong>Client 0145</strong><span>★★★★★</span><p>"Le meilleur service de livraison que j'ai testé, recommande !"</p></div>
+        </div>
+      </section>
+
+      <!-- PAGE INFOS -->
+      <section class="page" id="page-accueil">
+        <h2 class="section-title">Nos informations</h2>
+
+        <div class="info-box">
+          <div class="info-title">
+            🤝 MEET-UP
+            <span class="info-tag">93 / IDF</span>
+          </div>
+          <p class="info-sub">
+            Rencontre rapide et sécurisée sur nos points de retrait exclusifs dans le 93 (Ligne H, RER C).
+          </p>
+          <div class="info-row"><span>MINIMUM</span><strong>50€</strong></div>
+          <div class="info-row"><span>HORAIRES</span><strong>13:00 – 03:00</strong></div>
+          <div class="info-row"><span>SÉCURITÉ</span><strong>Lieux discrets</strong></div>
         </div>
 
+        <div class="info-box">
+          <div class="info-title">
+            🚚 LIVRAISON
+            <span class="info-tag premium">PREMIUM</span>
+          </div>
+          <p class="info-sub">
+            Service de livraison premium en Île-de-France par nos chauffeurs privés.
+          </p>
+          <div class="info-row"><span>PARIS & IDF PROCHE</span><strong>Min 50€</strong></div>
+          <div class="info-row"><span>77 / 91</span><strong>Min 100€</strong></div>
+          <div class="info-row"><span>COMMANDE</span><strong>24/24</strong></div>
+          <div class="info-row"><span>LIVRAISON</span><strong>14:00 – 02:00</strong></div>
+        </div>
+      </section>
+
+      <!-- PAGE PRODUITS -->
+      <section class="page" id="page-produits">
+        <h2 class="section-title">Nos produits</h2>
+        <div class="product-list"></div>
+      </section>
+
+      <!-- PAGE PRODUIT DÉTAILLÉ -->
+      <section class="page" id="page-produit-detail">
+        <div class="product-section">
+          <button id="back-to-produits" class="back-btn">⬅ Retour</button>
+        </div>
+
+        <div id="product-media">
+          <video id="product-video" width="100%" controls>
+            <source id="product-video-src" src="" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="product-section" id="product-name">
+          <h2 id="product-title">PRODUIT</h2>
+          <h3 id="product-subtitle">Sous-titre</h3>
+        </div>
+
+        <div class="product-section" id="product-description-container">
+          <h3>📝 Description</h3>
+          <p id="product-description">Description détaillée du produit ici...</p>
+        </div>
+
+        <div class="product-section" id="product-prices-container">
+          <h3>💰 Prix et quantités</h3>
+          <div id="product-prices" class="price-grid"></div>
+        </div>
+
+        <div class="product-section" id="product-order">
+          <button id="add-to-cart-btn" class="contact-btn btn-add-cart">🛒 AJOUTER AU PANIER</button>
+        </div>
+      </section>
+
+      <!-- PAGE PANIER -->
+      <section class="page" id="page-panier">
+        <h2 class="section-title">Votre Panier</h2>
+        
+        <div id="cart-empty" class="cart-empty" style="display: none;">
+          <div class="empty-icon">🛒</div>
+          <h3>Panier vide</h3>
+          <p>Ajoutez des produits pour commencer</p>
+        </div>
+
+        <div id="cart-content" style="display: none;">
+          <div id="cart-items" class="cart-items"></div>
+
+          <div class="cart-summary">
+            <div class="summary-row">
+              <span>Sous-total</span>
+              <strong id="cart-subtotal">0€</strong>
+            </div>
+            <div class="summary-row">
+              <span>Frais de livraison</span>
+              <strong id="cart-delivery">0€</strong>
+            </div>
+            <div class="summary-row total">
+              <span>TOTAL</span>
+              <strong id="cart-total">0€</strong>
+            </div>
+          </div>
+
+          <div class="cart-actions">
+            <a href="https://wa.me/33758594530" target="_blank" class="contact-btn big whatsapp">📱 Commander via WhatsApp</a>
+            <a href="https://t.me/PanameDelivery" target="_blank" class="contact-btn big telegram">✈️ Commander via Telegram</a>
+          </div>
+
+          <button id="clear-cart-btn" class="btn-clear-cart">Vider le panier</button>
+        </div>
+      </section>
+
+      <!-- PAGE CONTACT -->
+      <section class="page" id="page-contact">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact-buttons">
+          <a href="https://wa.me/33758594530" target="_blank" class="contact-btn big whatsapp">📱 WhatsApp</a>
+          <a href="https://t.me/PanameDelivery" target="_blank" class="contact-btn big telegram">✈️ Telegram</a>
+        </div>
       </section>
 
     </main>
+
+    <!-- NAVIGATION EN BAS -->
+    <nav class="bottom-nav">
+      <button class="nav-item" data-page="page-qg">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-label">Accueil</span>
+      </button>
+      <button class="nav-item" data-page="page-accueil">
+        <span class="nav-icon">ℹ️</span>
+        <span class="nav-label">Infos</span>
+      </button>
+      <button class="nav-item" data-page="page-produits">
+        <span class="nav-icon">🛍️</span>
+        <span class="nav-label">Produits</span>
+      </button>
+      <button class="nav-item" data-page="page-panier">
+        <span class="nav-icon">🛒</span>
+        <span class="nav-label">Panier</span>
+        <span class="cart-badge" id="cart-badge" style="display: none;">0</span>
+      </button>
+      <button class="nav-item" data-page="page-contact">
+        <span class="nav-icon">✉️</span>
+        <span class="nav-label">Contact</span>
+      </button>
+    </nav>
+
   </div>
 
-  <!-- ======================= -->
-  <!-- JS PRINCIPAL -->
-  <!-- ======================= -->
   <script src="app.js" defer></script>
 </body>
 </html>
