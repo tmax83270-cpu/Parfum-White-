@@ -1,21 +1,12 @@
-// =======================================================
-//                      TELEGRAM INIT
-// =======================================================
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-// =======================================================
-//                      HAPTIC VIBRATION
-// =======================================================
 function haptic() {
   if (window.Telegram && Telegram.WebApp && Telegram.WebApp.HapticFeedback) {
     Telegram.WebApp.HapticFeedback.impactOccurred('light');
   }
 }
 
-// =======================================================
-//                      PANIER - SYSTEM
-// =======================================================
 class Cart {
   constructor() {
     this.items = this.loadCart();
@@ -87,9 +78,6 @@ class Cart {
 
 const cart = new Cart();
 
-// =======================================================
-//                      SPLASH SCREEN
-// =======================================================
 const splash = document.getElementById('splash');
 const app = document.getElementById('app');
 
@@ -101,12 +89,10 @@ setTimeout(() => {
     splash.style.display = 'none';
     app.style.display = 'block';
 
-    // Afficher QG par défaut
     document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
     const qgPage = document.getElementById('page-qg');
     qgPage.style.display = 'block';
 
-    // Activer bouton QG dans le nav
     document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
     const qgBtn = document.querySelector('.nav-item[data-page="page-qg"]');
     if (qgBtn) qgBtn.classList.add('active');
@@ -117,45 +103,33 @@ setTimeout(() => {
 
 }, 2000);
 
-// =======================================================
-//                      NAVIGATION
-// =======================================================
 document.querySelectorAll('.nav-item').forEach(btn => {
   btn.addEventListener('click', () => {
     haptic();
 
-    // Remove active from all
     document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
 
-    // Hide all pages
     document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
 
-    // Show selected page
     const pageId = btn.dataset.page;
     const page = document.getElementById(pageId);
     page.style.display = 'block';
 
-    // Load products if needed
     if (pageId === 'page-produits') {
       showProductList(document.querySelector('#page-produits .product-list'), Object.keys(productsData));
     }
 
-    // Load cart if needed
     if (pageId === 'page-panier') {
       renderCart();
     }
   });
 });
 
-// =======================================================
-//              QG CARDS → PRODUITS
-// =======================================================
 document.addEventListener('click', e => {
   if (e.target.closest('.qg-card')) {
     haptic();
 
-    // Switch to products
     document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
     const prodBtn = document.querySelector('.nav-item[data-page="page-produits"]');
     if (prodBtn) prodBtn.classList.add('active');
@@ -173,9 +147,6 @@ document.addEventListener('click', e => {
   }
 });
 
-// =======================================================
-//                      DONNÉES PRODUITS
-// =======================================================
 const productsData = {
   sauvage: {
     title: "DIOR SAUVAGE",
@@ -233,9 +204,6 @@ const productsData = {
   }
 };
 
-// =======================================================
-//                      AFFICHAGE PRODUITS
-// =======================================================
 function showProductList(container, keys) {
   container.innerHTML = '';
   keys.forEach((k, index) => {
@@ -256,9 +224,6 @@ function showProductList(container, keys) {
   });
 }
 
-// =======================================================
-//                      OUVRIR PRODUIT DÉTAILLÉ
-// =======================================================
 let currentProduct = null;
 let currentPrice = null;
 
@@ -295,32 +260,22 @@ function openProductDetail(key) {
   });
 }
 
-// =======================================================
-//                      CLIQUER SUR VOIR
-// =======================================================
 document.addEventListener('click', e => {
   if (e.target.classList.contains('voir-btn')) {
     openProductDetail(e.target.closest('.product').dataset.product);
   }
 });
 
-// =======================================================
-//                      RETOUR PRODUITS
-// =======================================================
 document.getElementById('back-to-produits').addEventListener('click', () => {
   haptic();
   document.getElementById('page-produit-detail').style.display = 'none';
   document.getElementById('page-produits').style.display = 'block';
 });
 
-// =======================================================
-//                      AJOUTER AU PANIER
-// =======================================================
 document.getElementById('add-to-cart-btn').addEventListener('click', () => {
   if (currentProduct && currentPrice) {
     cart.addItem(currentProduct, currentPrice, 1);
     
-    // Show feedback
     const btn = document.getElementById('add-to-cart-btn');
     const originalText = btn.textContent;
     btn.textContent = '✅ AJOUTÉ!';
@@ -333,9 +288,6 @@ document.getElementById('add-to-cart-btn').addEventListener('click', () => {
   }
 });
 
-// =======================================================
-//                      RENDU PANIER
-// =======================================================
 function renderCart() {
   const empty = document.getElementById('cart-empty');
   const content = document.getElementById('cart-content');
@@ -390,7 +342,6 @@ function renderCart() {
     itemsContainer.appendChild(itemDiv);
   });
 
-  // Mettre à jour le résumé
   const total = cart.getTotal();
   const delivery = total >= 50 ? 0 : 5;
   
@@ -399,9 +350,6 @@ function renderCart() {
   document.getElementById('cart-total').textContent = (total + delivery) + '€';
 }
 
-// =======================================================
-//                      BOUTON VIDER PANIER
-// =======================================================
 document.getElementById('clear-cart-btn').addEventListener('click', () => {
   if (confirm('Vider le panier ?')) {
     haptic();
@@ -410,7 +358,4 @@ document.getElementById('clear-cart-btn').addEventListener('click', () => {
   }
 });
 
-// =======================================================
-//                      INIT
-// =======================================================
 cart.updateBadge();
