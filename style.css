@@ -452,6 +452,10 @@ p {
     transform: scale(0.95);
 }
 
+.product-detail-container {
+    max-width: 100%;
+}
+
 .product-section {
     margin: 16px auto;
     padding: 16px;
@@ -463,7 +467,19 @@ p {
     animation: fadeInUp 0.5s ease;
 }
 
-.product-section h3 {
+.product-section-center {
+    margin: 16px auto;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    max-width: 100%;
+    background: var(--bg-secondary);
+    text-align: center;
+    animation: fadeInUp 0.5s ease;
+}
+
+.product-section h3,
+.product-section-center h3 {
     font-size: 14px;
     font-weight: 700;
     color: var(--text-secondary);
@@ -504,6 +520,9 @@ p {
     font-weight: 500;
     text-transform: none;
     letter-spacing: 0;
+    border: none;
+    padding: 0;
+    margin: 0;
 }
 
 #product-description {
@@ -555,7 +574,8 @@ p {
 }
 
 #product-order {
-    display: block !important;
+    display: flex;
+    justify-content: center;
     padding: 16px !important;
     border: 1px solid var(--border) !important;
     background: var(--bg-secondary) !important;
@@ -599,6 +619,12 @@ p {
     transform: scale(0.98);
 }
 
+.contact-btn.contact-btn-small {
+    padding: 10px 16px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
 .contact-btn.big {
     padding: 14px 24px;
     font-size: 14px;
@@ -630,6 +656,7 @@ p {
     gap: 8px;
     text-transform: uppercase;
     letter-spacing: 0.3px;
+    margin: 0 auto 16px auto;
 }
 
 .back-btn:hover {
@@ -644,12 +671,13 @@ p {
 .btn-add-cart {
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%) !important;
     color: #000 !important;
-    width: 100% !important;
-    padding: 14px !important;
+    padding: 14px 24px !important;
     font-size: 14px !important;
     font-weight: 700 !important;
     border-radius: var(--radius-lg) !important;
     box-shadow: 0 4px 15px rgba(245, 166, 35, 0.3) !important;
+    text-transform: uppercase !important;
+    width: auto !important;
 }
 
 .btn-add-cart:hover {
@@ -722,16 +750,16 @@ p {
 
 .qg-card {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    align-items: stretch;
     background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
     border-radius: var(--radius-lg);
-    padding: 16px;
+    padding: 0;
     border: 1px solid var(--border);
     cursor: pointer;
     transition: var(--transition);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     animation: slideInUp 0.5s ease;
+    overflow: hidden;
 }
 
 .qg-card:nth-child(1) { animation-delay: 0.1s; }
@@ -745,14 +773,26 @@ p {
 }
 
 .qg-card .icon {
-    font-size: 24px;
-    margin-right: 12px;
+    font-size: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-shrink: 0;
+    width: 120px;
+    background: rgba(245, 166, 35, 0.1);
+}
+
+.qg-card:hover .icon {
+    background: rgba(245, 166, 35, 0.2);
 }
 
 .qg-card > div {
     flex: 1;
     text-align: left;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .qg-card h3 {
@@ -771,7 +811,8 @@ p {
 .qg-card .arrow {
     font-size: 16px;
     color: var(--primary);
-    margin-left: 12px;
+    position: absolute;
+    right: 16px;
     transition: var(--transition);
     flex-shrink: 0;
 }
@@ -1122,5 +1163,10 @@ p {
     .cart-item-controls {
         width: 100%;
         justify-content: flex-end;
+    }
+
+    .qg-card .icon {
+        width: 100px;
+        font-size: 50px;
     }
 }
