@@ -533,44 +533,62 @@ p {
 }
 
 .price-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
 }
 
 .price-option {
-    padding: 12px;
-    border: 1px solid var(--border);
-    border-top: none;
-    border-bottom: none;
+    padding: 16px;
+    border: 2px solid var(--border);
     background: var(--bg-tertiary);
     cursor: pointer;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    gap: 8px;
     transition: var(--transition);
     font-size: 14px;
-}
-
-.price-option:first-child {
-    border-top: 1px solid var(--border);
-    border-radius: var(--radius-md) var(--radius-md) 0 0;
-}
-
-.price-option:last-child {
-    border-bottom: 1px solid var(--border);
-    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    border-radius: var(--radius-md);
+    position: relative;
 }
 
 .price-option:hover {
     background: var(--bg-secondary);
     border-color: var(--primary);
+    transform: translateY(-3px);
 }
 
 .price-option.selected {
-    background: linear-gradient(135deg, rgba(245, 166, 35, 0.15) 0%, rgba(245, 166, 35, 0.08) 100%);
+    background: linear-gradient(135deg, rgba(245, 166, 35, 0.2) 0%, rgba(245, 166, 35, 0.1) 100%);
     border-color: var(--primary);
-    font-weight: 600;
+    border-width: 2px;
+    box-shadow: 0 0 0 1px var(--primary), inset 0 0 10px rgba(245, 166, 35, 0.1);
+}
+
+.price-option.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.price-option span {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    font-weight: 500;
+}
+
+.price-option strong {
+    font-size: 18px;
+    color: var(--primary);
+    font-weight: 700;
 }
 
 #product-order {
@@ -773,12 +791,12 @@ p {
 }
 
 .qg-card .icon {
-    font-size: 60px;
+    font-size: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    width: 120px;
+    width: 110px;
     background: rgba(245, 166, 35, 0.1);
 }
 
@@ -1167,6 +1185,10 @@ p {
 
     .qg-card .icon {
         width: 100px;
-        font-size: 50px;
+        font-size: 45px;
+    }
+
+    .price-grid {
+        grid-template-columns: 1fr;
     }
 }
