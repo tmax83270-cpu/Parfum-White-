@@ -148,57 +148,61 @@ document.addEventListener('click', e => {
 });
 
 const productsData = {
-  cali_weed_us: {
-    title: "CALI WEED 🇺🇸",
-    subtitle: "Oreoz ⬛️◻️",
-    description: "Top qualité, Forte odeur, bonne defonce  .",
-    video: "assets/cali_weed_us.mp4",
-    prices: [{ qty: "5g", price: "50€" }, { qty: "10g", price: "100€" }]
-  
-
-  
-
-  },
-  cocaine: {
-    title: "COCAINE ❄️",
-    subtitle: "Ecaille ⚡️",
-    description: "Produit de Top qualité ressors a 0.9 convient tout autant pour les fumeurs que les sniffeurs 👃.",
-    video: "assets/cocaine.mp4",
+  sauvage: {
+    title: "DIOR SAUVAGE",
+    subtitle: "Eau de Parfum",
+    description: "Notes fraîches de bergamote associées à des accords boisés puissants.",
+    video: "assets/sauvage.mp4",
     prices: [
-      { qty: "1g", price: "60€" },
-      { qty: "2g", price: "100€" },
-      { qty: "5g", price: "240€" },
-      { qty: "10g", price: "380€" }
+      { qty: "50ml", price: 69 },
+      { qty: "100ml", price: 99 }
     ]
   },
 
-  filtre : {
-    title: "FILTRÉ 120u ",
-    subtitle: "Ruby 🍋‍🟩🍈 ",
-    description: "Hash aromatique, texture unique, bonne defonce.",
-    video: "assets/filtre.mp4",
+  bleu_chanel: {
+    title: "BLEU DE CHANEL",
+    subtitle: "Eau de Parfum",
+    description: "Fragrance élégante et moderne aux notes boisées aromatiques.",
+    video: "assets/bleu_chanel.mp4",
     prices: [
-      { qty: "5g", price: "50€" },
-      { qty: "10g", price: "90€" },
-      { qty: "20g", price: "160€" }
+      { qty: "50ml", price: 79 },
+      { qty: "100ml", price: 115 }
     ]
   },
 
-
-  
-  jaune_mousse: {
-    title: "JAUNE MOUSSE ",
-    subtitle: "Rainbow Gello 🇳🇱 ",
-    description: "Hash aromatique, texture unique.",
-    video: "assets/jaune_mousse.mp4",
+  aventus: {
+    title: "CREED AVENTUS",
+    subtitle: "Eau de Parfum",
+    description: "Parfum iconique aux notes fruitées et boisées.",
+    video: "assets/aventus.mp4",
     prices: [
-      { qty: "10g", price: "50€" },
-      { qty: "100g", price: "270€" },
-      { qty: "1kilo", price: "2300€" }
+      { qty: "50ml", price: 149 },
+      { qty: "100ml", price: 249 }
+    ]
+  },
+
+  baccarat: {
+    title: "BACCARAT ROUGE 540",
+    subtitle: "Maison Francis Kurkdjian",
+    description: "Une fragrance luxueuse et raffinée à la signature unique.",
+    video: "assets/baccarat.mp4",
+    prices: [
+      { qty: "35ml", price: 99 },
+      { qty: "70ml", price: 179 }
+    ]
+  },
+
+  lemale: {
+    title: "LE MALE ELIXIR",
+    subtitle: "Jean Paul Gaultier",
+    description: "Un parfum intense aux notes gourmandes et orientales.",
+    video: "assets/lemale.mp4",
+    prices: [
+      { qty: "75ml", price: 89 },
+      { qty: "125ml", price: 119 }
     ]
   }
 };
-
 
 function showProductList(container, keys) {
   container.innerHTML = '';
