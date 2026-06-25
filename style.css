@@ -599,6 +599,70 @@ p {
     background: var(--bg-secondary) !important;
 }
 
+.delivery-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.delivery-option {
+    position: relative;
+    cursor: pointer;
+}
+
+.delivery-option input[type="radio"] {
+    display: none;
+}
+
+.delivery-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--bg-tertiary);
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.delivery-option input[type="radio"]:checked + .delivery-label {
+    background: linear-gradient(135deg, rgba(245, 166, 35, 0.2) 0%, rgba(245, 166, 35, 0.1) 100%);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 1px var(--primary), inset 0 0 10px rgba(245, 166, 35, 0.1);
+}
+
+.delivery-label:hover {
+    background: var(--bg-secondary);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.delivery-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+}
+
+.delivery-text {
+    flex: 1;
+    text-align: left;
+}
+
+.delivery-text strong {
+    display: block;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    font-size: 14px;
+}
+
+.delivery-price {
+    display: block;
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 600;
+}
+
 .contact-btn {
     padding: 12px 20px;
     border-radius: var(--radius-md);
@@ -850,8 +914,8 @@ p {
 }
 
 .qg-reviews {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 12px;
 }
 
@@ -859,12 +923,16 @@ p {
     background: var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    padding: 14px;
+    padding: 16px;
     font-size: 13px;
     text-align: left;
     transition: var(--transition);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     animation: fadeInLeft 0.5s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 200px;
 }
 
 @keyframes fadeInLeft {
@@ -1190,5 +1258,13 @@ p {
 
     .price-grid {
         grid-template-columns: 1fr;
+    }
+
+    .delivery-label {
+        flex-wrap: wrap;
+    }
+
+    .qg-reviews {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
