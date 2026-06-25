@@ -827,7 +827,7 @@ p {
     display:flex;
     flex-direction:column;
     gap:18px;
-    margin:20px 0 30px;
+    margin:20px 0;
 }
 
 .qg-card{
@@ -838,11 +838,11 @@ p {
     background:#171717;
     border:1px solid #303030;
 
-    border-radius:38px;
+    border-radius:28px;
 
-    min-height:115px;
+    padding:18px 22px;
 
-    padding:20px 28px;
+    min-height:90px;
 
     box-sizing:border-box;
 
@@ -855,18 +855,21 @@ p {
 
 .qg-card:hover{
     transform:none;
-    border-color:#3a3a3a;
+    border-color:#303030;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.03),
+        0 0 0 1px rgba(255,255,255,.02);
 }
 
 .qg-card .icon{
-    width:75px;
-    min-width:75px;
+    width:55px;
+    min-width:55px;
 
     display:flex;
     align-items:center;
     justify-content:center;
 
-    font-size:54px;
+    font-size:42px;
     margin:0;
 }
 
@@ -878,35 +881,31 @@ p {
 .qg-content h3{
     margin:0;
     color:#fff;
-
-    font-size:34px;
+    font-size:24px;
     font-weight:800;
-
     line-height:1;
     text-transform:uppercase;
 }
 
 .qg-content p{
-    margin-top:10px;
-
-    color:#b9b9b9;
-
-    font-size:18px;
+    margin-top:6px;
+    color:#b5b5b5;
+    font-size:11px;
     font-weight:400;
-
     text-transform:uppercase;
     letter-spacing:.5px;
+    white-space:nowrap;
 }
 
 .qg-card .arrow{
-    width:75px;
-    min-width:75px;
+    width:45px;
+    min-width:45px;
 
     display:flex;
     align-items:center;
     justify-content:center;
 
-    font-size:48px;
+    font-size:34px;
     color:#fff;
 }
 
