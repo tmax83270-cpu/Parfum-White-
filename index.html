@@ -5,30 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PanameDelivery - MiniApp</title>
 
-  <!-- Telegram Web App -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-  <!-- CSS principal -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- TOP BANNER -->
   <div id="top-banner">
     <div class="ticker">
       🚘 Livraison rapide | 📦 Produits de qualité | 🔥 Offres limitées | 💶 Paiement en cash | 🎁 Parrainage exclusif
     </div>
   </div>
 
-  <!-- SPLASH SCREEN -->
   <div id="splash">
     <img src="assets/logo.png" alt="Logo PanameDelivery" class="splash-logo">
   </div>
 
-  <!-- APP PRINCIPALE -->
   <div id="app" style="display:none">
 
-    <!-- HEADER -->
     <header class="topbar">
       <div class="logo-container">
         <img src="assets/logo.png" alt="Logo" class="logo">
@@ -38,10 +32,8 @@
       </div>
     </header>
 
-    <!-- CONTENU -->
     <main class="content">
 
-      <!-- PAGE ACCUEIL / QG -->
       <section class="page" id="page-qg">
         <h2 class="section-title">Accueil</h2>
         
@@ -81,7 +73,6 @@
         </div>
       </section>
 
-      <!-- PAGE INFOS -->
       <section class="page" id="page-accueil">
         <h2 class="section-title">Informations</h2>
 
@@ -113,13 +104,11 @@
         </div>
       </section>
 
-      <!-- PAGE PRODUITS -->
       <section class="page" id="page-produits">
         <h2 class="section-title">Produits</h2>
         <div class="product-list"></div>
       </section>
 
-      <!-- PAGE PRODUIT DÉTAILLÉ -->
       <section class="page" id="page-produit-detail">
         <div class="product-detail-container">
           <button id="back-to-produits" class="back-btn">⬅ Retour</button>
@@ -151,7 +140,6 @@
         </div>
       </section>
 
-      <!-- PAGE PANIER -->
       <section class="page" id="page-panier">
         <h2 class="section-title">Panier</h2>
         
@@ -164,13 +152,51 @@
         <div id="cart-content" style="display: none;">
           <div id="cart-items" class="cart-items"></div>
 
+          <div class="product-section-center">
+            <h3>🚚 Méthode de livraison</h3>
+            <div class="delivery-options">
+              <label class="delivery-option">
+                <input type="radio" name="delivery" value="delivery" checked>
+                <span class="delivery-label">
+                  <span class="delivery-icon">🚚</span>
+                  <span class="delivery-text">
+                    <strong>Livraison</strong>
+                    <span class="delivery-price">Gratuit</span>
+                  </span>
+                </span>
+              </label>
+
+              <label class="delivery-option">
+                <input type="radio" name="delivery" value="pickup">
+                <span class="delivery-label">
+                  <span class="delivery-icon">📍</span>
+                  <span class="delivery-text">
+                    <strong>Click & Collect</strong>
+                    <span class="delivery-price">Gratuit</span>
+                  </span>
+                </span>
+              </label>
+
+              <label class="delivery-option">
+                <input type="radio" name="delivery" value="postal">
+                <span class="delivery-label">
+                  <span class="delivery-icon">📬</span>
+                  <span class="delivery-text">
+                    <strong>Colis Postal</strong>
+                    <span class="delivery-price">Gratuit</span>
+                  </span>
+                </span>
+              </label>
+            </div>
+          </div>
+
           <div class="cart-summary">
             <div class="summary-row">
               <span>Sous-total</span>
               <strong id="cart-subtotal">0€</strong>
             </div>
             <div class="summary-row">
-              <span>Frais de livraison</span>
+              <span>Frais</span>
               <strong id="cart-delivery">0€</strong>
             </div>
             <div class="summary-row total">
@@ -180,15 +206,14 @@
           </div>
 
           <div class="cart-actions">
-            <a href="https://wa.me/33758594530" target="_blank" class="contact-btn contact-btn-small whatsapp">📱 WhatsApp</a>
-            <a href="https://t.me/PanameDelivery" target="_blank" class="contact-btn contact-btn-small telegram">✈️ Telegram</a>
+            <a href="#" id="cart-whatsapp-btn" target="_blank" class="contact-btn contact-btn-small whatsapp">📱 Commande WhatsApp</a>
+            <a href="#" id="cart-telegram-btn" target="_blank" class="contact-btn contact-btn-small telegram">✈️ Commande Telegram</a>
           </div>
 
           <button id="clear-cart-btn" class="btn-clear-cart">Vider le panier</button>
         </div>
       </section>
 
-      <!-- PAGE CONTACT -->
       <section class="page" id="page-contact">
         <h2 class="section-title">Contact</h2>
         <div class="contact-buttons">
@@ -199,7 +224,6 @@
 
     </main>
 
-    <!-- NAVIGATION EN BAS -->
     <nav class="bottom-nav">
       <button class="nav-item" data-page="page-qg">
         <span class="nav-icon">🏠</span>
