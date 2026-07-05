@@ -244,28 +244,28 @@
           <!-- BOUTON CHECKOUT -->
           <button id="submit-order-btn" class="btn-checkout" disabled>💳 Passer la commande</button>
           <button id="clear-cart-btn" class="btn-secondary">Vider le panier</button>
-
-          <!-- MODAL CHOIX CONTACT -->
-          <div id="delivery-modal" class="modal" style="display: none;">
-            <div class="modal-content">
-              <h3>📞 Envoyer la commande</h3>
-              <div class="modal-buttons">
-                <button id="modal-whatsapp-btn" class="modal-btn whatsapp">
-                  <span class="btn-icon">📱</span>
-                  <span>WhatsApp</span>
-                </button>
-                <button id="modal-telegram-btn" class="modal-btn telegram">
-                  <span class="btn-icon">✈️</span>
-                  <span>Telegram</span>
-                </button>
-              </div>
-              <button id="modal-cancel-btn" class="modal-close-btn">Retour</button>
-            </div>
-          </div>
         </div>
       </section>
 
-      <section class="page" id="page-contact">
+      <section class="page" id="page-checkout">
+        <div class="checkout-container">
+          <h2 class="checkout-title">📞 Comment envoyer votre commande ?</h2>
+          
+          <div class="checkout-buttons">
+            <button id="checkout-whatsapp-btn" class="checkout-btn whatsapp">
+              <span class="checkout-icon">📱</span>
+              <span class="checkout-text">WhatsApp</span>
+            </button>
+            
+            <button id="checkout-telegram-btn" class="checkout-btn telegram">
+              <span class="checkout-icon">✈️</span>
+              <span class="checkout-text">Telegram</span>
+            </button>
+          </div>
+
+          <button id="checkout-back-btn" class="checkout-back">← Retour</button>
+        </div>
+      </section>
         <h2 class="section-title">Contact</h2>
         <div class="contact-buttons">
           <a href="https://wa.me/33758594530" target="_blank" class="contact-btn contact-btn-small whatsapp">📱 WhatsApp</a>
