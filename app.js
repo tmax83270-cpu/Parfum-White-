@@ -366,9 +366,19 @@ function renderCart() {
   const delivery = deliveryInfo.fee;
   const finalTotal = total + delivery;
   
+  // Mise à jour de tous les totaux
   document.getElementById('cart-subtotal').textContent = total + '€';
-  document.getElementById('cart-delivery').textContent = delivery === 0 ? 'GRATUIT' : delivery + '€';
+  document.getElementById('cart-delivery').textContent = delivery === 0 ? 'Gratuit' : delivery + '€';
   document.getElementById('cart-total').textContent = finalTotal + '€';
+  
+  // Mise à jour du résumé rapide
+  const itemCount = cart.items.reduce((acc, item) => acc + item.qty, 0);
+  document.getElementById('cart-items-count').textContent = itemCount;
+  document.getElementById('cart-total-quick').textContent = finalTotal + '€';
+  
+  // Mise à jour du label de livraison
+  const deliveryName = deliveryInfo.name || 'Livraison';
+  document.getElementById('delivery-label-name').textContent = deliveryName;
 
   // Mise à jour des liens WhatsApp et Telegram
   updateOrderMessages();
@@ -453,7 +463,10 @@ document.addEventListener('click', (e) => {
     }
     haptic();
     const modal = document.getElementById('delivery-modal');
-    if (modal) modal.style.display = 'flex';
+    if (modal) {
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
   }
 });
 
@@ -465,7 +478,10 @@ document.addEventListener('click', (e) => {
     const waUrl = `https://wa.me/33758594530?text=${encodeURIComponent(message)}`;
     window.open(waUrl, '_blank');
     const modal = document.getElementById('delivery-modal');
-    if (modal) modal.style.display = 'none';
+    if (modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
   }
 });
 
@@ -477,7 +493,10 @@ document.addEventListener('click', (e) => {
     const tgUrl = `https://t.me/PanameDelivery?text=${encodeURIComponent(message)}`;
     window.open(tgUrl, '_blank');
     const modal = document.getElementById('delivery-modal');
-    if (modal) modal.style.display = 'none';
+    if (modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
   }
 });
 
@@ -486,7 +505,10 @@ document.addEventListener('click', (e) => {
   if (e.target.id === 'modal-cancel-btn') {
     haptic();
     const modal = document.getElementById('delivery-modal');
-    if (modal) modal.style.display = 'none';
+    if (modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
   }
 });
 
@@ -495,6 +517,7 @@ document.addEventListener('click', (e) => {
   const modal = document.getElementById('delivery-modal');
   if (e.target === modal) {
     modal.style.display = 'none';
+    document.body.style.overflow = '';
   }
 });
 
