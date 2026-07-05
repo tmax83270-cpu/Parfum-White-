@@ -439,21 +439,62 @@ document.addEventListener('click', (e) => {
     haptic();
     document.getElementById('order-address').value = '';
     document.getElementById('order-info').value = '';
+    updateOrderMessages();
   }
 });
 
-// Bouton Envoyer
+// Bouton Envoyer - Afficher la modale
 document.addEventListener('click', (e) => {
   if (e.target.id === 'submit-order-btn') {
     const address = document.getElementById('order-address').value;
-    if (!address) {
+    if (!address || address.trim() === '') {
       alert('Veuillez remplir votre adresse');
       return;
     }
     haptic();
+    const modal = document.getElementById('delivery-modal');
+    if (modal) modal.style.display = 'flex';
+  }
+});
+
+// Bouton WhatsApp dans la modale
+document.addEventListener('click', (e) => {
+  if (e.target.id === 'modal-whatsapp-btn') {
+    haptic();
     const message = generateOrderMessage();
     const waUrl = `https://wa.me/33758594530?text=${encodeURIComponent(message)}`;
     window.open(waUrl, '_blank');
+    const modal = document.getElementById('delivery-modal');
+    if (modal) modal.style.display = 'none';
+  }
+});
+
+// Bouton Telegram dans la modale
+document.addEventListener('click', (e) => {
+  if (e.target.id === 'modal-telegram-btn') {
+    haptic();
+    const message = generateOrderMessage();
+    const tgUrl = `https://t.me/PanameDelivery?text=${encodeURIComponent(message)}`;
+    window.open(tgUrl, '_blank');
+    const modal = document.getElementById('delivery-modal');
+    if (modal) modal.style.display = 'none';
+  }
+});
+
+// Bouton Annuler de la modale
+document.addEventListener('click', (e) => {
+  if (e.target.id === 'modal-cancel-btn') {
+    haptic();
+    const modal = document.getElementById('delivery-modal');
+    if (modal) modal.style.display = 'none';
+  }
+});
+
+// Fermer la modale en cliquant en dehors
+document.addEventListener('click', (e) => {
+  const modal = document.getElementById('delivery-modal');
+  if (e.target === modal) {
+    modal.style.display = 'none';
   }
 });
 
