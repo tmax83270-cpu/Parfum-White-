@@ -141,19 +141,39 @@
       </section>
 
       <section class="page" id="page-panier">
-        <h2 class="section-title">Panier</h2>
-        
+        <h2 class="section-title">🛒 Mon panier</h2>
+
+        <!-- PANIER VIDE -->
         <div id="cart-empty" class="cart-empty" style="display: none;">
           <div class="empty-icon">🛒</div>
           <h3>Panier vide</h3>
           <p>Ajoutez des produits pour commencer</p>
         </div>
 
+        <!-- PANIER REMPLI -->
         <div id="cart-content" style="display: none;">
-          <div id="cart-items" class="cart-items"></div>
+          <!-- RÉSUMÉ RAPIDE EN HAUT -->
+          <div class="cart-quick-summary">
+            <div class="summary-item">
+              <span class="label">Articles</span>
+              <strong id="cart-items-count">0</strong>
+            </div>
+            <div class="summary-divider"></div>
+            <div class="summary-item">
+              <span class="label">Total</span>
+              <strong id="cart-total-quick">0€</strong>
+            </div>
+          </div>
 
-          <div class="product-section-center">
-            <h3>🚚 Méthode de livraison</h3>
+          <!-- PRODUITS -->
+          <div class="cart-items-section">
+            <h3 class="cart-section-title">📦 Commande</h3>
+            <div id="cart-items" class="cart-items"></div>
+          </div>
+
+          <!-- LIVRAISON -->
+          <div class="cart-section">
+            <h3 class="cart-section-title">🚚 Mode de livraison</h3>
             <div class="delivery-options">
               <label class="delivery-option">
                 <input type="radio" name="delivery" value="delivery" checked>
@@ -190,44 +210,45 @@
             </div>
           </div>
 
-          <div class="cart-summary">
-            <div class="summary-row">
+          <!-- ADRESSE -->
+          <div class="cart-section">
+            <h3 class="cart-section-title">📦 Adresse de livraison</h3>
+            
+            <div class="form-group">
+              <label class="form-label">Adresse complète *</label>
+              <input type="text" id="order-address" class="form-input" placeholder="12 Rue Exemple, 33000 Bordeaux" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Complément (optionnel)</label>
+              <textarea id="order-info" class="form-input form-textarea" placeholder="Digicode, étage, repère..."></textarea>
+            </div>
+          </div>
+
+          <!-- RÉSUMÉ TOTAL EN BAS -->
+          <div class="cart-final-summary">
+            <div class="summary-line">
               <span>Sous-total</span>
               <strong id="cart-subtotal">0€</strong>
             </div>
-            <div class="summary-row">
-              <span>Frais</span>
-              <strong id="cart-delivery">0€</strong>
+            <div class="summary-line">
+              <span id="delivery-label-name">Livraison</span>
+              <strong id="cart-delivery">Gratuit</strong>
             </div>
-            <div class="summary-row total">
+            <div class="summary-line total">
               <span>TOTAL</span>
               <strong id="cart-total">0€</strong>
             </div>
           </div>
 
-          <div class="order-form-section">
-            <h3>📋 COMMANDE</h3>
-            
-            <div class="form-group">
-              <label class="form-label">ADRESSE COMPLÈTE *</label>
-              <input type="text" id="order-address" class="form-input" placeholder="12 Rue Exemple, 33000 Bordeaux" required>
-            </div>
+          <!-- BOUTON CHECKOUT -->
+          <button id="submit-order-btn" class="btn-checkout" disabled>💳 Passer la commande</button>
+          <button id="clear-cart-btn" class="btn-secondary">Vider le panier</button>
 
-            <div class="form-group">
-              <label class="form-label">INFORMATIONS ADDITIONNELLES</label>
-              <textarea id="order-info" class="form-input form-textarea" placeholder="Digicode, étage, repère..."></textarea>
-            </div>
-
-            <div class="form-actions">
-              <button id="cancel-order-btn" class="btn-cancel">Annuler</button>
-              <button id="submit-order-btn" class="btn-submit">Envoyer</button>
-            </div>
-          </div>
-
-          <!-- MODAL CHOIX LIVRAISON -->
+          <!-- MODAL CHOIX CONTACT -->
           <div id="delivery-modal" class="modal" style="display: none;">
             <div class="modal-content">
-              <h3>Choisissez votre canal de contact</h3>
+              <h3>📞 Envoyer la commande</h3>
               <div class="modal-buttons">
                 <button id="modal-whatsapp-btn" class="modal-btn whatsapp">
                   <span class="btn-icon">📱</span>
@@ -238,11 +259,9 @@
                   <span>Telegram</span>
                 </button>
               </div>
-              <button id="modal-cancel-btn" class="modal-close-btn">Annuler</button>
+              <button id="modal-cancel-btn" class="modal-close-btn">Retour</button>
             </div>
           </div>
-
-          <button id="clear-cart-btn" class="btn-clear-cart">Vider le panier</button>
         </div>
       </section>
 
