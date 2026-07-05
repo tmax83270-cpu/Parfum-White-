@@ -379,6 +379,8 @@ function generateOrderMessage() {
   const total = cart.getTotal();
   const delivery = deliveryInfo.fee;
   const finalTotal = total + delivery;
+  const address = document.getElementById('order-address').value;
+  const info = document.getElementById('order-info').value;
 
   let message = '🛒 *COMMANDE PANAME DELIVERY*\n\n';
   message += '📋 *PRODUITS:*\n';
@@ -392,29 +394,80 @@ function generateOrderMessage() {
   message += `${deliveryInfo.name}: ${delivery === 0 ? 'GRATUIT' : delivery + '€'}\n`;
   message += `*TOTAL: ${finalTotal}€*\n\n`;
   message += `🚚 *Mode de livraison:* ${deliveryInfo.name}\n`;
+  
+  if (address) {
+    message += `📍 *Adresse:* ${address}\n`;
+  }
+  
+  if (info) {
+    message += `📝 *Infos:* ${info}\n`;
+  }
 
   return message;
 }
 
 function updateOrderMessages() {
-  const message = generateOrderMessage();
-  const waUrl = `https://wa.me/33758594530?text=${encodeURIComponent(message)}`;
-  const tgUrl = `https://t.me/PanameDelivery?text=${encodeURIComponent(message)}`;
+  const submitBtn = document.getElementById('submit-order-btn');
+  const address = document.getElementById('order-address').value;
+  
+  if (!address || address.trim() === '') {
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.style.opacity = '0.5';
+      submitBtn.style.cursor = 'not-allowed';
+    }
+    return;
+  }
 
-  const waBtn = document.getElementById('cart-whatsapp-btn');
-  const tgBtn = document.getElementById('cart-telegram-btn');
-
-  if (waBtn) waBtn.href = waUrl;
-  if (tgBtn) tgBtn.href = tgUrl;
+  if (submitBtn) {
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = '1';
+    submitBtn.style.cursor = 'pointer';
+  }
 }
+
+// Event listeners pour les champs du formulaire
+document.addEventListener('input', (e) => {
+  if (e.target.id === 'order-address' || e.target.id === 'order-info') {
+    updateOrderMessages();
+  }
+});
+
+// Bouton Annuler
+document.addEventListener('click', (e) => {
+  if (e.target.id === 'cancel-order-btn') {
+    haptic();
+    document.getElementById('order-address').value = '';
+    document.getElementById('order-info').value = '';
+  }
+});
+
+// Bouton Envoyer
+document.addEventListener('click', (e) => {
+  if (e.target.id === 'submit-order-btn') {
+    const address = document.getElementById('order-address').value;
+    if (!address) {
+      alert('Veuillez remplir votre adresse');
+      return;
+    }
+    haptic();
+    const message = generateOrderMessage();
+    const waUrl = `https://wa.me/33758594530?text=${encodeURIComponent(message)}`;
+    window.open(waUrl, '_blank');
+  }
+});
 
 document.getElementById('clear-cart-btn').addEventListener('click', () => {
   if (confirm('Vider le panier ?')) {
     haptic();
     cart.clear();
     selectedDelivery = 'delivery';
+    document.getElementById('order-address').value = '';
+    document.getElementById('order-info').value = '';
     renderCart();
   }
 });
 
+// Initialisation
 cart.updateBadge();
+updateOrderMessages();
