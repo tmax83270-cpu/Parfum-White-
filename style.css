@@ -1013,7 +1013,6 @@ p {
     margin-bottom: 30px;
 }
 
-/* PANIER PROFESSIONNEL */
 .cart-quick-summary {
     background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
     border: 1px solid var(--border);
@@ -1180,7 +1179,6 @@ p {
     transform: scale(1.05);
 }
 
-/* RÉSUMÉ FINAL */
 .cart-final-summary {
     background: var(--bg-secondary);
     border: 2px solid var(--border);
@@ -1224,7 +1222,6 @@ p {
     font-size: 18px;
 }
 
-/* BOUTONS CHECKOUT */
 .btn-checkout {
     width: 100%;
     padding: 14px 24px;
@@ -1280,24 +1277,112 @@ p {
     transform: scale(0.95);
 }
 
-.order-form-section {
-    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 20px;
-    margin-bottom: 16px;
-    animation: fadeInUp 0.5s ease 0.2s both;
+/* PAGE CHECKOUT FULLSCREEN */
+#page-checkout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: var(--bg-primary);
 }
 
-.order-form-section h3 {
-    font-size: 14px;
+.checkout-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.checkout-title {
+    font-size: 28px;
     font-weight: 700;
-    color: var(--text-secondary);
+    color: var(--text-primary);
+    margin-bottom: 40px;
+    letter-spacing: -0.3px;
+}
+
+.checkout-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    margin-bottom: 24px;
+}
+
+.checkout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 18px 24px;
+    border: none;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    transition: var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.checkout-btn.whatsapp {
+    background: #25D366;
+    color: white;
+}
+
+.checkout-btn.whatsapp:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(37, 211, 102, 0.4);
+}
+
+.checkout-btn.telegram {
+    background: #0088cc;
+    color: white;
+}
+
+.checkout-btn.telegram:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 136, 204, 0.4);
+}
+
+.checkout-btn:active {
+    transform: scale(0.95);
+}
+
+.checkout-icon {
+    font-size: 28px;
+}
+
+.checkout-text {
+    display: block;
+}
+
+.checkout-back {
+    padding: 12px 32px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-tertiary);
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: var(--transition);
     text-transform: uppercase;
     letter-spacing: 0.3px;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--border);
+}
+
+.checkout-back:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.checkout-back:active {
+    transform: scale(0.95);
 }
 
 .form-group {
@@ -1340,229 +1425,6 @@ p {
 .form-textarea {
     resize: vertical;
     min-height: 70px;
-}
-
-.form-actions {
-    display: flex;
-    gap: 12px;
-    margin-top: 16px;
-}
-
-.btn-cancel {
-    flex: 1;
-    padding: 12px 16px;
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--text-tertiary);
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 13px;
-    cursor: pointer;
-    transition: var(--transition);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-}
-
-.btn-cancel:hover {
-    border-color: var(--primary);
-    color: var(--primary);
-}
-
-.btn-cancel:active {
-    transform: scale(0.95);
-}
-
-.btn-submit {
-    flex: 1;
-    padding: 12px 16px;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
-    color: #000;
-    border: none;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 13px;
-    cursor: pointer;
-    transition: var(--transition);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    box-shadow: 0 4px 12px rgba(245, 166, 35, 0.3);
-}
-
-.btn-submit:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(245, 166, 35, 0.4);
-}
-
-.btn-submit:active {
-    transform: scale(0.95);
-}
-
-.btn-submit:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9000;
-    backdrop-filter: blur(4px);
-    overflow: hidden;
-}
-
-.modal-content {
-    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 24px;
-    max-width: 320px;
-    width: 90%;
-    animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-    flex-shrink: 0;
-}
-
-.modal-content h3 {
-    text-align: center;
-    margin: 0 0 20px 0;
-    color: var(--text-primary);
-    font-size: 16px;
-}
-
-.modal-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 16px;
-}
-
-.modal-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 16px;
-    border: none;
-    border-radius: var(--radius-md);
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    transition: var(--transition);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-}
-
-.modal-btn.whatsapp {
-    background: #25D366;
-    color: white;
-    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
-}
-
-.modal-btn.whatsapp:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
-}
-
-.modal-btn.telegram {
-    background: #0088cc;
-    color: white;
-    box-shadow: 0 4px 12px rgba(0, 136, 204, 0.3);
-}
-
-.modal-btn.telegram:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 136, 204, 0.4);
-}
-
-.modal-btn:active {
-    transform: scale(0.98);
-}
-
-.btn-icon {
-    font-size: 20px;
-}
-
-.modal-close-btn {
-    width: 100%;
-    padding: 12px 16px;
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--text-tertiary);
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 13px;
-    cursor: pointer;
-    transition: var(--transition);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-}
-
-.modal-close-btn:hover {
-    border-color: var(--primary);
-    color: var(--primary);
-}
-
-.modal-close-btn:active {
-    transform: scale(0.95);
-}
-
-.btn-clear-cart {
-    background: #ff4444;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: var(--radius-md);
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    font-size: 12px;
-}
-
-.btn-clear-cart:hover {
-    background: #ff2222;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(255, 34, 34, 0.3);
-}
-
-#splash {
-    position: fixed;
-    inset: 0;
-    background: var(--bg-primary);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
-
-.splash-logo {
-    width: 180px;
-    height: auto;
-    animation: splashZoom 1.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    filter: drop-shadow(0 8px 24px rgba(245, 166, 35, 0.2));
-}
-
-@keyframes splashZoom {
-    0% { 
-        transform: scale(0.3);
-        opacity: 0;
-    }
-    50% { 
-        transform: scale(1.15);
-        opacity: 1;
-    }
-    100% { 
-        transform: scale(1);
-        opacity: 1;
-    }
 }
 
 @media (max-width: 480px) {
@@ -1629,5 +1491,23 @@ p {
 
     .qg-reviews {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .checkout-container {
+        padding: 30px 15px;
+    }
+
+    .checkout-title {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    .checkout-btn {
+        padding: 16px 20px;
+        font-size: 14px;
+    }
+
+    .checkout-icon {
+        font-size: 24px;
     }
 }
