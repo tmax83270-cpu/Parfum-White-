@@ -1,316 +1,222 @@
-const tg = window.Telegram.WebApp;
-tg.expand();
-
-function haptic() {
-  if (window.Telegram && Telegram.WebApp && Telegram.WebApp.HapticFeedback) {
-    Telegram.WebApp.HapticFeedback.impactOccurred('light');
-  }
+// Initialiser Telegram Web App
+const tg = window.Telegram?.WebApp;
+if (tg) {
+  tg.expand();
+  tg.ready();
 }
 
+function haptic() {
+  if (tg) tg.HapticFeedback?.impactOccurred('light');
+}
+
+// ===== CART CLASS =====
 class Cart {
   constructor() {
-    this.items = this.loadCart();
+    this.items = JSON.parse(localStorage.getItem('cart')) || [];
   }
 
-  loadCart() {
-    const saved = localStorage.getItem('panier');
-    return saved ? JSON.parse(saved) : [];
-  }
-
-  saveCart() {
-    localStorage.setItem('panier', JSON.stringify(this.items));
-    this.updateBadge();
-  }
-
-  addItem(product, price, qty = 1) {
-    const existingItem = this.items.find(item => item.id === product && item.price === price);
-    
-    if (existingItem) {
-      existingItem.qty += qty;
+  addItem(id, name, price, qty = 1) {
+    const existing = this.items.find(item => item.id === id && item.price === price);
+    if (existing) {
+      existing.qty += qty;
     } else {
-      this.items.push({
-        id: product,
-        name: productsData[product].title,
-        price: price,
-        qty: qty
-      });
+      this.items.push({ id, name, price, qty });
     }
-    
-    this.saveCart();
-    haptic();
+    this.save();
   }
 
-  removeItem(product, price) {
-    this.items = this.items.filter(item => !(item.id === product && item.price === price));
-    this.saveCart();
-    haptic();
+  removeItem(id, price) {
+    this.items = this.items.filter(item => !(item.id === id && item.price === price));
+    this.save();
   }
 
-  updateQty(product, price, qty) {
-    const item = this.items.find(item => item.id === product && item.price === price);
+  updateQty(id, price, qty) {
+    const item = this.items.find(item => item.id === id && item.price === price);
     if (item) {
       item.qty = Math.max(1, qty);
-      this.saveCart();
+      this.save();
     }
   }
 
   clear() {
     this.items = [];
-    this.saveCart();
+    this.save();
   }
 
   getTotal() {
-    return this.items.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    return this.items.reduce((sum, item) => sum + item.price * item.qty, 0);
   }
 
-  updateBadge() {
-    const badge = document.getElementById('cart-badge');
-    const count = this.items.length;
-    
-    if (count > 0) {
-      badge.textContent = count > 9 ? '9+' : count;
-      badge.style.display = 'flex';
-    } else {
-      badge.style.display = 'none';
-    }
+  save() {
+    localStorage.setItem('cart', JSON.stringify(this.items));
+    updateBadge();
   }
 }
 
 const cart = new Cart();
-
-const splash = document.getElementById('splash');
-const app = document.getElementById('app');
-
-setTimeout(() => {
-  splash.style.transition = 'opacity 0.4s ease';
-  splash.style.opacity = '0';
-  
-  setTimeout(() => {
-    splash.style.display = 'none';
-    app.style.display = 'block';
-
-    document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-    const qgPage = document.getElementById('page-qg');
-    qgPage.style.display = 'block';
-
-    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-    const qgBtn = document.querySelector('.nav-item[data-page="page-qg"]');
-    if (qgBtn) qgBtn.classList.add('active');
-
-    cart.updateBadge();
-
-  }, 400);
-
-}, 2000);
-
-document.querySelectorAll('.nav-item').forEach(btn => {
-  btn.addEventListener('click', () => {
-    haptic();
-
-    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-
-    document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-
-    const pageId = btn.dataset.page;
-    const page = document.getElementById(pageId);
-    page.style.display = 'block';
-
-    if (pageId === 'page-produits') {
-      showProductList(document.querySelector('#page-produits .product-list'), Object.keys(productsData));
-    }
-
-    if (pageId === 'page-panier') {
-      renderCart();
-    }
-  });
-});
-
-document.addEventListener('click', e => {
-  if (e.target.closest('.qg-card')) {
-    haptic();
-
-    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-    const prodBtn = document.querySelector('.nav-item[data-page="page-produits"]');
-    if (prodBtn) prodBtn.classList.add('active');
-
-    document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-    const prodPage = document.getElementById('page-produits');
-    prodPage.style.display = 'block';
-
-    showProductList(
-      document.querySelector('#page-produits .product-list'),
-      Object.keys(productsData)
-    );
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-});
+let selectedDelivery = 'delivery';
 
 const productsData = {
   sauvage: {
-    title: "DIOR SAUVAGE",
-    subtitle: "Eau de Parfum",
-    description: "Notes fraîches de bergamote associées à des accords boisés puissants.",
-    video: "assets/sauvage.mp4",
-    prices: [
-      { qty: "50ml", price: 69 },
-      { qty: "100ml", price: 99 }
+    name: 'DIOR SAUVAGE',
+    brand: 'Dior',
+    description: 'Un parfum boisé et épicé, léger et frais, parfait pour tous les jours.',
+    video: 'assets/sauvage.mp4',
+    sizes: [
+      { ml: '50ml', price: 69 },
+      { ml: '100ml', price: 99 }
     ]
   },
-
   bleu_chanel: {
-    title: "BLEU DE CHANEL",
-    subtitle: "Eau de Parfum",
-    description: "Fragrance élégante et moderne aux notes boisées aromatiques.",
-    video: "assets/bleu_chanel.mp4",
-    prices: [
-      { qty: "50ml", price: 79 },
-      { qty: "100ml", price: 115 }
+    name: 'BLEU DE CHANEL',
+    brand: 'Chanel',
+    description: 'Un parfum frais et boisé avec des notes de citron et d\'épices.',
+    video: 'assets/bleu_chanel.mp4',
+    sizes: [
+      { ml: '50ml', price: 79 },
+      { ml: '100ml', price: 115 }
     ]
   },
-
   aventus: {
-    title: "CREED AVENTUS",
-    subtitle: "Eau de Parfum",
-    description: "Parfum iconique aux notes fruitées et boisées.",
-    video: "assets/aventus.mp4",
-    prices: [
-      { qty: "50ml", price: 149 },
-      { qty: "100ml", price: 249 }
+    name: 'CREED AVENTUS',
+    brand: 'Creed',
+    description: 'Une fragrance fruité avec des notes de pomme et de jasmin.',
+    video: 'assets/aventus.mp4',
+    sizes: [
+      { ml: '50ml', price: 149 },
+      { ml: '100ml', price: 249 }
     ]
   },
-
   baccarat: {
-    title: "BACCARAT ROUGE 540",
-    subtitle: "Maison Francis Kurkdjian",
-    description: "Une fragrance luxueuse et raffinée à la signature unique.",
-    video: "assets/baccarat.mp4",
-    prices: [
-      { qty: "35ml", price: 99 },
-      { qty: "70ml", price: 179 }
+    name: 'BACCARAT ROUGE 540',
+    brand: 'Francis Kurkdjian',
+    description: 'Un parfum ambroisé et riche avec des notes florales délicates.',
+    video: 'assets/baccarat.mp4',
+    sizes: [
+      { ml: '35ml', price: 99 },
+      { ml: '70ml', price: 179 }
     ]
   },
-
   lemale: {
-    title: "LE MALE ELIXIR",
-    subtitle: "Jean Paul Gaultier",
-    description: "Un parfum intense aux notes gourmandes et orientales.",
-    video: "assets/lemale.mp4",
-    prices: [
-      { qty: "75ml", price: 89 },
-      { qty: "125ml", price: 119 }
+    name: 'LE MALE ELIXIR',
+    brand: 'Jean Paul Gaultier',
+    description: 'Un parfum sucré et gourmand avec des notes de vanille et d\'amande.',
+    video: 'assets/lemale.mp4',
+    sizes: [
+      { ml: '75ml', price: 89 },
+      { ml: '125ml', price: 119 }
     ]
   }
 };
 
+// ===== PAGE NAVIGATION =====
+function showPage(pageId) {
+  document.querySelectorAll('.page').forEach(page => {
+    page.style.display = 'none';
+  });
+  document.getElementById(pageId).style.display = 'block';
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.classList.remove('active');
+  });
+  document.querySelector(`[data-page="${pageId}"]`).classList.add('active');
+
+  if (pageId === 'page-panier') {
+    renderCart();
+  }
+}
+
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const pageId = item.dataset.page;
+    showPage(pageId);
+    haptic();
+  });
+});
+
+// ===== PRODUCTS PAGE =====
 function showProductList(container, keys) {
   container.innerHTML = '';
-  keys.forEach((k, index) => {
-    const prod = productsData[k];
+  keys.forEach(key => {
+    const product = productsData[key];
     const div = document.createElement('div');
     div.className = 'product';
-    div.dataset.product = k;
-    div.style.animationDelay = `${index * 0.1}s`;
     div.innerHTML = `
-      <div class="product-top"><img src="assets/${k}.jpg" alt="${prod.title}"></div>
+      <div class="product-top">
+        <img src="assets/${key}.jpg" alt="${product.name}">
+      </div>
       <div class="product-bottom">
-        <h2>${prod.title}</h2>
-        <h3>${prod.subtitle}</h3>
-        <div class="voir-btn">VOIR</div>
+        <h2>${product.brand}</h2>
+        <h3>${product.name}</h3>
+        <button class="voir-btn">VOIR</button>
       </div>
     `;
+    div.addEventListener('click', () => {
+      openProductDetail(key);
+      haptic();
+    });
     container.appendChild(div);
   });
 }
 
-let currentProduct = null;
-let currentPrice = null;
+const productListContainer = document.querySelector('#page-produits .product-list');
+showProductList(productListContainer, ['sauvage', 'bleu_chanel', 'aventus', 'baccarat', 'lemale']);
 
+// ===== PRODUCT DETAIL =====
 function openProductDetail(key) {
-  haptic();
-
-  const data = productsData[key];
-  currentProduct = key;
-  currentPrice = data.prices[0].price;
-
-  document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-  const pageDetail = document.getElementById('page-produit-detail');
-  pageDetail.style.display = 'block';
-
-  document.getElementById('product-title').textContent = data.title;
-  document.getElementById('product-subtitle').textContent = data.subtitle || '';
-  document.getElementById('product-description').textContent = data.description;
-  document.getElementById('product-video-src').src = data.video;
-  document.getElementById('product-video').load();
+  const product = productsData[key];
+  document.getElementById('product-video-src').src = product.video;
+  document.getElementById('product-title').textContent = product.name;
+  document.getElementById('product-subtitle').textContent = product.brand;
+  document.getElementById('product-description').textContent = product.description;
 
   const pricesContainer = document.getElementById('product-prices');
   pricesContainer.innerHTML = '';
-  data.prices.forEach((p, i) => {
+
+  let selectedSize = null;
+  let selectedPrice = null;
+
+  product.sizes.forEach(size => {
     const div = document.createElement('div');
     div.className = 'price-option';
-    div.innerHTML = `<span>${p.qty}</span><strong>${p.price}€</strong>`;
-    if (i === 0) div.classList.add('selected');
+    div.innerHTML = `
+      <span>${size.ml}</span>
+      <strong>${size.price}€</strong>
+    `;
     div.addEventListener('click', () => {
-      document.querySelectorAll('.price-option').forEach(c => c.classList.remove('selected'));
+      document.querySelectorAll('.price-option').forEach(opt => opt.classList.remove('selected'));
       div.classList.add('selected');
-      currentPrice = p.price;
+      selectedSize = size.ml;
+      selectedPrice = size.price;
+      haptic();
     });
     pricesContainer.appendChild(div);
   });
-}
 
-document.addEventListener('click', e => {
-  if (e.target.classList.contains('voir-btn')) {
-    openProductDetail(e.target.closest('.product').dataset.product);
-  }
-});
+  document.getElementById('add-to-cart-btn').onclick = () => {
+    if (!selectedSize) {
+      alert('Sélectionnez une taille');
+      return;
+    }
+    cart.addItem(key, `${product.name} ${selectedSize}`, selectedPrice);
+    haptic();
+    alert('Ajouté au panier!');
+    showPage('page-qg');
+  };
+
+  showPage('page-produit-detail');
+}
 
 document.getElementById('back-to-produits').addEventListener('click', () => {
+  showPage('page-produits');
   haptic();
-  document.getElementById('page-produit-detail').style.display = 'none';
-  document.getElementById('page-produits').style.display = 'block';
 });
 
-document.getElementById('add-to-cart-btn').addEventListener('click', () => {
-  if (currentProduct && currentPrice) {
-    cart.addItem(currentProduct, currentPrice, 1);
-    
-    const btn = document.getElementById('add-to-cart-btn');
-    const originalText = btn.textContent;
-    btn.textContent = '✅ AJOUTÉ!';
-    btn.style.background = '#25D366';
-    
-    setTimeout(() => {
-      btn.textContent = originalText;
-      btn.style.background = '';
-    }, 2000);
-  }
-});
-
-// Gestion des options de livraison
-let selectedDelivery = 'delivery';
-
-document.querySelectorAll('input[name="delivery"]').forEach(radio => {
-  radio.addEventListener('change', (e) => {
-    selectedDelivery = e.target.value;
-    renderCart();
-  });
-});
-
-function getDeliveryInfo() {
-  const deliveryOptions = {
-    delivery: { name: 'Livraison', fee: 0, min: 0 },
-    pickup: { name: 'Click & Collect', fee: 0, min: 0 },
-    postal: { name: 'Colis Postal', fee: 0, min: 0 }
-  };
-  return deliveryOptions[selectedDelivery] || deliveryOptions.delivery;
-}
-
+// ===== CART RENDERING =====
 function renderCart() {
   const empty = document.getElementById('cart-empty');
   const content = document.getElementById('cart-content');
-  
+
   if (cart.items.length === 0) {
     empty.style.display = 'block';
     content.style.display = 'none';
@@ -365,50 +271,78 @@ function renderCart() {
   const deliveryInfo = getDeliveryInfo();
   const delivery = deliveryInfo.fee;
   const finalTotal = total + delivery;
-  
-  // Mise à jour de tous les totaux
+
   document.getElementById('cart-subtotal').textContent = total + '€';
   document.getElementById('cart-delivery').textContent = delivery === 0 ? 'Gratuit' : delivery + '€';
   document.getElementById('cart-total').textContent = finalTotal + '€';
-  
-  // Mise à jour du résumé rapide
+
   const itemCount = cart.items.reduce((acc, item) => acc + item.qty, 0);
   document.getElementById('cart-items-count').textContent = itemCount;
   document.getElementById('cart-total-quick').textContent = finalTotal + '€';
-  
-  // Mise à jour du label de livraison
+
   const deliveryName = deliveryInfo.name || 'Livraison';
   document.getElementById('delivery-label-name').textContent = deliveryName;
 
-  // Mise à jour des liens WhatsApp et Telegram
   updateOrderMessages();
 }
 
+function updateBadge() {
+  const badge = document.getElementById('cart-badge');
+  if (cart.items.length > 0) {
+    badge.style.display = 'flex';
+    badge.textContent = cart.items.length;
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+// ===== DELIVERY =====
+document.querySelectorAll('input[name="delivery"]').forEach(input => {
+  input.addEventListener('change', () => {
+    selectedDelivery = input.value;
+    haptic();
+    renderCart();
+  });
+});
+
+function getDeliveryInfo() {
+  const names = {
+    delivery: '🚚 Livraison',
+    pickup: '📍 Click & Collect',
+    postal: '📬 Colis Postal'
+  };
+  return {
+    name: names[selectedDelivery] || 'Livraison',
+    fee: 0,
+    min: 0
+  };
+}
+
+// ===== ORDER MESSAGE =====
 function generateOrderMessage() {
+  const items = cart.items.map(item => {
+    const total = item.price * item.qty;
+    return `• ${item.name} - ${item.price}€ x${item.qty} = ${total}€`;
+  }).join('\n');
+
+  const subtotal = cart.getTotal();
   const deliveryInfo = getDeliveryInfo();
-  const total = cart.getTotal();
-  const delivery = deliveryInfo.fee;
-  const finalTotal = total + delivery;
+  const total = subtotal + deliveryInfo.fee;
   const address = document.getElementById('order-address').value;
   const info = document.getElementById('order-info').value;
 
-  let message = '🛒 *COMMANDE PANAME DELIVERY*\n\n';
-  message += '📋 *PRODUITS:*\n';
-  
-  cart.items.forEach(item => {
-    message += `• ${item.name} - ${item.price}€ x${item.qty} = ${item.price * item.qty}€\n`;
-  });
-
-  message += `\n💰 *RÉCAPITULATIF:*\n`;
-  message += `Sous-total: ${total}€\n`;
-  message += `${deliveryInfo.name}: ${delivery === 0 ? 'GRATUIT' : delivery + '€'}\n`;
-  message += `*TOTAL: ${finalTotal}€*\n\n`;
+  let message = `🛒 *COMMANDE PANAME DELIVERY*\n\n`;
+  message += `📋 *PRODUITS:*\n${items}\n\n`;
+  message += `💰 *RÉCAPITULATIF:*\n`;
+  message += `Sous-total: ${subtotal}€\n`;
+  message += `${deliveryInfo.name}: GRATUIT\n`;
+  message += `*TOTAL: ${total}€*\n\n`;
   message += `🚚 *Mode de livraison:* ${deliveryInfo.name}\n`;
-  
+
   if (address) {
     message += `📍 *Adresse:* ${address}\n`;
   }
-  
+
   if (info) {
     message += `📝 *Infos:* ${info}\n`;
   }
@@ -419,41 +353,22 @@ function generateOrderMessage() {
 function updateOrderMessages() {
   const submitBtn = document.getElementById('submit-order-btn');
   const address = document.getElementById('order-address').value;
-  
-  if (!address || address.trim() === '') {
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.style.opacity = '0.5';
-      submitBtn.style.cursor = 'not-allowed';
-    }
-    return;
-  }
 
-  if (submitBtn) {
+  if (!address || address.trim() === '') {
+    submitBtn.disabled = true;
+  } else {
     submitBtn.disabled = false;
-    submitBtn.style.opacity = '1';
-    submitBtn.style.cursor = 'pointer';
   }
 }
 
-// Event listeners pour les champs du formulaire
+// ===== EVENT LISTENERS =====
 document.addEventListener('input', (e) => {
   if (e.target.id === 'order-address' || e.target.id === 'order-info') {
     updateOrderMessages();
   }
 });
 
-// Bouton Annuler
-document.addEventListener('click', (e) => {
-  if (e.target.id === 'cancel-order-btn') {
-    haptic();
-    document.getElementById('order-address').value = '';
-    document.getElementById('order-info').value = '';
-    updateOrderMessages();
-  }
-});
-
-// Bouton Envoyer - Afficher la modale
+// BOUTON PASSER COMMANDE - AFFICHER PAGE CHECKOUT
 document.addEventListener('click', (e) => {
   if (e.target.id === 'submit-order-btn') {
     const address = document.getElementById('order-address').value;
@@ -462,76 +377,57 @@ document.addEventListener('click', (e) => {
       return;
     }
     haptic();
-    const modal = document.getElementById('delivery-modal');
-    if (modal) {
-      modal.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    }
+    showPage('page-checkout');
   }
 });
 
-// Bouton WhatsApp dans la modale
+// BOUTON WHATSAPP - OUVRIR WHATSAPP
 document.addEventListener('click', (e) => {
-  if (e.target.id === 'modal-whatsapp-btn') {
+  if (e.target.id === 'checkout-whatsapp-btn') {
     haptic();
     const message = generateOrderMessage();
     const waUrl = `https://wa.me/33758594530?text=${encodeURIComponent(message)}`;
     window.open(waUrl, '_blank');
-    const modal = document.getElementById('delivery-modal');
-    if (modal) {
-      modal.style.display = 'none';
-      document.body.style.overflow = '';
-    }
   }
 });
 
-// Bouton Telegram dans la modale
+// BOUTON TELEGRAM - OUVRIR TELEGRAM
 document.addEventListener('click', (e) => {
-  if (e.target.id === 'modal-telegram-btn') {
+  if (e.target.id === 'checkout-telegram-btn') {
     haptic();
     const message = generateOrderMessage();
     const tgUrl = `https://t.me/PanameDelivery?text=${encodeURIComponent(message)}`;
     window.open(tgUrl, '_blank');
-    const modal = document.getElementById('delivery-modal');
-    if (modal) {
-      modal.style.display = 'none';
-      document.body.style.overflow = '';
+  }
+});
+
+// BOUTON RETOUR PAGE CHECKOUT
+document.addEventListener('click', (e) => {
+  if (e.target.id === 'checkout-back-btn') {
+    haptic();
+    showPage('page-panier');
+  }
+});
+
+// VIDER PANIER
+document.addEventListener('click', (e) => {
+  if (e.target.id === 'clear-cart-btn') {
+    if (confirm('Vider le panier ?')) {
+      haptic();
+      cart.clear();
+      selectedDelivery = 'delivery';
+      document.getElementById('order-address').value = '';
+      document.getElementById('order-info').value = '';
+      renderCart();
     }
   }
 });
 
-// Bouton Annuler de la modale
-document.addEventListener('click', (e) => {
-  if (e.target.id === 'modal-cancel-btn') {
-    haptic();
-    const modal = document.getElementById('delivery-modal');
-    if (modal) {
-      modal.style.display = 'none';
-      document.body.style.overflow = '';
-    }
-  }
-});
+// ===== SPLASH SCREEN =====
+setTimeout(() => {
+  document.getElementById('splash').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  showPage('page-qg');
+}, 2000);
 
-// Fermer la modale en cliquant en dehors
-document.addEventListener('click', (e) => {
-  const modal = document.getElementById('delivery-modal');
-  if (e.target === modal) {
-    modal.style.display = 'none';
-    document.body.style.overflow = '';
-  }
-});
-
-document.getElementById('clear-cart-btn').addEventListener('click', () => {
-  if (confirm('Vider le panier ?')) {
-    haptic();
-    cart.clear();
-    selectedDelivery = 'delivery';
-    document.getElementById('order-address').value = '';
-    document.getElementById('order-info').value = '';
-    renderCart();
-  }
-});
-
-// Initialisation
-cart.updateBadge();
-updateOrderMessages();
+updateBadge();
