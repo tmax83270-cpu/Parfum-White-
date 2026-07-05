@@ -45,24 +45,23 @@
         </div>
 
         <div class="qg-cards">
-    <div class="qg-card">
-        <div class="icon">☀️</div>
-        <div class="qg-content">
-            <h3>MENU DOUX</h3>
-            <p>CALI WEED • TOP JAUNE • FILTRÉ</p>
+          <div class="qg-card">
+            <div class="icon">☀️</div>
+            <div>
+              <h3>MENU Parfum 1</h3>
+              <p>CANNEL • VANILLE • BOIS D'ARGENT</p>
+            </div>
+            <span class="arrow">➜</span>
+          </div>
+          <div class="qg-card">
+            <div class="icon">☀️</div>
+            <div>
+              <h3>MENU DUR</h3>
+              <p>PRODUITS DE QUALITÉ GARANTIE</p>
+            </div>
+            <span class="arrow">➜</span>
+          </div>
         </div>
-        <div class="arrow">➜</div>
-    </div>
-
-    <div class="qg-card">
-        <div class="icon">❄️</div>
-        <div class="qg-content">
-            <h3>MENU DUR</h3>
-            <p>PRODUITS DE PURETÉ GARANTIE</p>
-        </div>
-        <div class="arrow">➜</div>
-    </div>
-</div>
 
         <h4 class="qg-title">CONFIANCE CLIENT</h4>
         <div class="qg-reviews">
@@ -206,9 +205,23 @@
             </div>
           </div>
 
-          <div class="cart-actions">
-            <a href="#" id="cart-whatsapp-btn" target="_blank" class="contact-btn contact-btn-small whatsapp">📱 Commande WhatsApp</a>
-            <a href="#" id="cart-telegram-btn" target="_blank" class="contact-btn contact-btn-small telegram">✈️ Commande Telegram</a>
+          <div class="order-form-section">
+            <h3>📋 COMMANDE</h3>
+            
+            <div class="form-group">
+              <label class="form-label">ADRESSE COMPLÈTE *</label>
+              <input type="text" id="order-address" class="form-input" placeholder="12 Rue Exemple, 33000 Bordeaux" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">INFORMATIONS ADDITIONNELLES</label>
+              <textarea id="order-info" class="form-input form-textarea" placeholder="Digicode, étage, repère..."></textarea>
+            </div>
+
+            <div class="form-actions">
+              <button id="cancel-order-btn" class="btn-cancel">Annuler</button>
+              <button id="submit-order-btn" class="btn-submit">Envoyer</button>
+            </div>
           </div>
 
           <button id="clear-cart-btn" class="btn-clear-cart">Vider le panier</button>
