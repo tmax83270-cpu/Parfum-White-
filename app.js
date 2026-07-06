@@ -368,7 +368,7 @@ document.addEventListener('input', (e) => {
   }
 });
 
-// BOUTON PASSER COMMANDE - AFFICHER PAGE CHECKOUT
+// BOUTON PASSER COMMANDE - AFFICHER MODALE
 document.addEventListener('click', (e) => {
   if (e.target.id === 'submit-order-btn') {
     const address = document.getElementById('order-address').value;
@@ -377,35 +377,62 @@ document.addEventListener('click', (e) => {
       return;
     }
     haptic();
-    showPage('page-checkout');
+    const modal = document.getElementById('delivery-modal');
+    if (modal) {
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
   }
 });
 
 // BOUTON WHATSAPP - OUVRIR WHATSAPP
 document.addEventListener('click', (e) => {
-  if (e.target.id === 'checkout-whatsapp-btn') {
+  if (e.target.id === 'modal-whatsapp-btn') {
     haptic();
     const message = generateOrderMessage();
     const waUrl = `https://wa.me/33758594530?text=${encodeURIComponent(message)}`;
     window.open(waUrl, '_blank');
+    const modal = document.getElementById('delivery-modal');
+    if (modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
   }
 });
 
 // BOUTON TELEGRAM - OUVRIR TELEGRAM
 document.addEventListener('click', (e) => {
-  if (e.target.id === 'checkout-telegram-btn') {
+  if (e.target.id === 'modal-telegram-btn') {
     haptic();
     const message = generateOrderMessage();
     const tgUrl = `https://t.me/PanameDelivery?text=${encodeURIComponent(message)}`;
     window.open(tgUrl, '_blank');
+    const modal = document.getElementById('delivery-modal');
+    if (modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
   }
 });
 
-// BOUTON RETOUR PAGE CHECKOUT
+// BOUTON RETOUR MODALE
 document.addEventListener('click', (e) => {
-  if (e.target.id === 'checkout-back-btn') {
+  if (e.target.id === 'modal-cancel-btn') {
     haptic();
-    showPage('page-panier');
+    const modal = document.getElementById('delivery-modal');
+    if (modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  }
+});
+
+// FERMER MODALE EN CLIQUANT EN DEHORS
+document.addEventListener('click', (e) => {
+  const modal = document.getElementById('delivery-modal');
+  if (e.target === modal) {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
   }
 });
 
