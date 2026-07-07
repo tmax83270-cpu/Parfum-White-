@@ -26,70 +26,14 @@ class Cart {
   }
 
   removeItem(id, price) {
-    this.items = this.items.filter(item => !(item.id === id && item.price === price));
-    this.save();
-  }
 
-  updateQty(id, price, qty) {
-    const item = this.items.find(item => item.id === id && item.price === price);
-    if (item) {
-      item.qty = Math.max(1, qty);
-      this.save();
-    }
-  }
-
-  clear() {
-    this.items = [];
-    this.save();
-  }
-
-  getTotal() {
-    return this.items.reduce((sum, item) => sum + item.price * item.qty, 0);
-  }
-
-  save() {
-    localStorage.setItem('cart', JSON.stringify(this.items));
-    updateBadge();
-  }
-}
-
-const cart = new Cart();
-let selectedDelivery = 'delivery';
-
-const productsData = {
-  sauvage: {
-    name: 'DIOR SAUVAGE',
-    brand: 'Dior',
-    description: 'Un parfum boisé et épicé, léger et frais, parfait pour tous les jours.',
-    video: 'assets/sauvage.mp4',
-    sizes: [
-      { ml: '50ml', price: 69 },
-      { ml: '100ml', price: 99 }
-    ]
-  },
-  bleu_chanel: {
-    name: 'BLEU DE CHANEL',
-    brand: 'Chanel',
-    description: 'Un parfum frais et boisé avec des notes de citron et d\'épices.',
-    video: 'assets/bleu_chanel.mp4',
-    sizes: [
-      { ml: '50ml', price: 79 },
-      { ml: '100ml', price: 115 }
-    ]
-  },
-  aventus: {
-    name: 'CREED AVENTUS',
-    brand: 'Creed',
-    description: 'Une fragrance fruité avec des notes de pomme et de jasmin.',
-    video: 'assets/aventus.mp4',
-    sizes: [
-      { ml: '50ml', price: 149 },
+      { '50ml', price: 149 },
       { ml: '100ml', price: 249 }
     ]
   },
-  baccarat: {
+  bacc
     name: 'BACCARAT ROUGE 540',
-    brand: 'Francis Kurkdjian',
+    brand: 'Francis Kurkdji
     description: 'Un parfum ambroisé et riche avec des notes florales délicates.',
     video: 'assets/baccarat.mp4',
     sizes: [
